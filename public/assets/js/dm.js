@@ -140,4 +140,33 @@ $(document).ready(function () {
         });
     }
 
+    
+    /** Check setelah typing berhenti beberapa saat Delivery Orders**/
+    var deliveryTypingTimer;
+	
+    $("#inputDeliveryPoId").on('keyup', function () {
+        clearTimeout(deliveryTypingTimer)
+        deliveryTypingTimer = setTimeout(checkDeliveryPoId, 500)
+    });
+
+    $("inputDeliveryPoId").on('keydown', function () {
+        clearTimeout(deliveryTypingTimer);
+    })
+
+    function checkDeliveryPoId() {
+        var po_id;
+        po_id = $('#inputDeliveryPoId').val();
+
+        $.ajax({
+            url: '/deliveryorders/check/ajax',
+            method: "GET",
+            data: {
+                po_id: po_id
+            },
+            success: function (response) {
+                $('#deliveryPoIdCheck').html(response.message);
+            },
+        });
+    }
+
 });
