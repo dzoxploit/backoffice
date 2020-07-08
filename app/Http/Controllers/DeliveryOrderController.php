@@ -4,14 +4,11 @@ namespace App\Http\Controllers;
 
 use App\DeliveryOrder;
 use App\DetailDeliveryOrder;
-use App\DetailPurchaseOrder;
 use App\Lib\DMlib;
 use App\PurchaseOrder;
-use App\Supplier;
 use App\TempDeliveryOrder;
 use App\TempDetailDeliveryOrder;
 use Exception;
-use Illuminate\Http\Request;
 
 class DeliveryOrderController extends Controller
 {
@@ -83,14 +80,30 @@ class DeliveryOrderController extends Controller
 
     public function detail($delivery_id)
     {
-        $getDetailDo = DetailPurchaseOrder::where('do_id', $delivery_id)->get();
-        $getDo = PurchaseOrder::where('do_id', $delivery_id)->first();
-    
+        $getDetailDo = DetailDeliveryOrder::where('do_id', $delivery_id)->get();
+        $getDo = DeliveryOrder::where('do_id', $delivery_id)->first();
+
         return view('deliveryorders.detail', [
             'pageTitle' => 'New Delivery Order',
             'detailDo' => $getDetailDo,
             'do' => $getDo
         ]);
+    }
+
+    public function check()
+    {
+        $purchaseOrder = PurchaseOrder::where('po_id', request('po_id'))->count();
+        if ($purchaseOrder > 0) {
+            return response([
+                'message' => 'Valid',
+                'msg_status' => 'po_is_valid'
+            ]);
+        } else {
+            return response([
+                'message' => 'Not Valid',
+                'msg_status' => 'po_not_valid'
+            ]);
+        }
     }
 
     public function destroy($do_id)
@@ -157,7 +170,7 @@ class DeliveryOrderController extends Controller
 
         return view('deliveryorders.product', [
             'pageTitle' => 'Add Product',
-            'product' => $product 
+            'product' => $product
         ]);
     }
 
