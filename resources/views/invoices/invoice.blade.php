@@ -62,9 +62,9 @@
                                         <td>{{ $inv->due_date }}</td>
                                         <td class="text-center">
                                             <div class="flex align-items-center">
-                                                <a type="button" class="btn btn-warning" data-placement="top" data-toggle="tooltip" title=""
+                                                {{-- <a type="button" class="btn btn-warning" data-placement="top" data-toggle="tooltip" title=""
                                                 data-original-title="Edit"
-                                                href="{{ 'suppliers/'.$inv->sup_id.'/edit' }}">Update</a>
+                                                href="{{ 'suppliers/'.$inv->sup_id.'/edit' }}">Update</a> --}}
 
                                                 <form action="{{ url('invoices/'.$inv->invoice_id) }}"
                                                     method="post" class="d-inline-block">

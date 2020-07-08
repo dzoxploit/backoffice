@@ -77,7 +77,7 @@
     </div>
 </div>
 
-<div class="iq-card">
+{{-- <div class="iq-card">
     <div class="iq-card-header d-flex justify-content-between">
         <div class="iq-header-title">
             <h4 class="card-title">Purchase Order</h4>
@@ -172,7 +172,7 @@
         </div> -->
     </div>
 
-</div>
+</div> --}}
 
 <!-- Modal -->
 <div class="modal fade" id="editdetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

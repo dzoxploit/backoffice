@@ -43,7 +43,7 @@
                         <li><a href="{{ url('/deliveryorders') }}">Delivery Orders</a></li>
                     </ul>
                 </li>
-                <li>
+                {{-- <li>
                     <a href="#sell" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false"><i
                             class="las la-envelope-open"></i><span>Sale</span><i
                             class="ri-arrow-right-s-line iq-arrow-right"></i></a>
@@ -52,7 +52,7 @@
                         <li><a href="{{ url('/sales/purchaseorders') }}">Purchase Orders</a></li>
                         <li><a href="{{ url('/deliveryorders') }}">Delivery Orders</a></li>
                     </ul>
-                </li>
+                </li> --}}
             </ul>
             </li>
             </ul>
