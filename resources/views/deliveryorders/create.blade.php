@@ -46,7 +46,7 @@
                             value="{{ $tempDo->po_id ?? '' }}">
                     </div>
                     <div class="col-3">
-                        <button type="button" class="btn btn-primary">Check</button>
+                        <button type="button" class="btn btn-primary" id="deliveryPoIdCheck">Check</button>
                     </div>
                 </div>
                 <div class="form-group row">
