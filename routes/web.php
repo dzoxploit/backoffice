@@ -50,9 +50,9 @@ Route::middleware(['myMiddleWare'])->group(function(){
     Route::get('/purchaseorders', 'PurchaseOrderController@index');
     Route::get('/purchaseorders/new', 'PurchaseOrderController@create');
     Route::post('/purchaseorders/new', 'PurchaseOrderController@store');
+    Route::get('/purchaseorders/product', 'PurchaseOrderController@showProduct');
     Route::get('/purchaseorders/{po_id}', 'PurchaseOrderController@detail');
     Route::delete('/purchaseorders/{po_id}', 'PurchaseOrderController@destroy');
-    Route::get('/purchaseorders/product', 'PurchaseOrderController@showProduct');
     Route::post('/purchaseorders/temp/store', 'PurchaseOrderController@tempStore');
     Route::get('/purchaseorders/temp/detail/{prod_id}', 'PurchaseOrderController@storeTempDetail');
     Route::delete('/purchaseorders/temp/detail/{prod_id}', 'PurchaseOrderController@destroyProduct');
@@ -80,6 +80,7 @@ Route::middleware(['myMiddleWare'])->group(function(){
     Route::get('/deliveryorders/{delivery_id}/edit', 'DeliveryOrderController@show');
     Route::put('/deliveryorders/{delivery_id}', 'DeliveryOrderController@update');
     Route::delete('/deliveryorders/{delivery_id}', 'DeliveryOrderController@destroy');
+    Route::get('/deliveryorders/check/ajax', 'DeliveryOrderController@check');
 
     //Delivery Orders Temporary
     Route::post('/deliveryorders/temp/save', 'DeliveryOrderController@storeTemp');
