@@ -1,0 +1,12 @@
+// Ini adalah kumpulan status message yang ada pada setiap fungsi
+
+/** roles **/
+Request    : Ajax Request
+Controller : UserController
+Method     : getRoles()
+Output     : JSON
+HttpMethod : Get
+==================================
+1. roles_obtained = roles berhasil di dapatkan
+2. roles_obtained_failed = roles gagal di dapatkan
+=================================
