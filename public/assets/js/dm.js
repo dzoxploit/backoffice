@@ -1,4 +1,3 @@
-//base url for easy use
 
 $.ajaxSetup({
     headers: {
