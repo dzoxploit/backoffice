@@ -152,7 +152,7 @@ class PurchaseOrderController extends Controller
         } else {
             $product = array();
         }
-
+   
         return view('purchaseorder.product', [
             'pageTitle' => 'Add Product',
             'product' => $product
