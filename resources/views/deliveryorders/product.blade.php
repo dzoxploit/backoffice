@@ -41,6 +41,7 @@
                                 <tr>
                                     <th>Product ID</th>
                                     <th>Name</th>
+                                    <th>Qty</th>
                                     <th>Price</th>
                                     <th>Action</th>
                                 </tr>
@@ -48,14 +49,15 @@
                             <tbody>
                                 @foreach($product as $pd)
                                     <tr>
-                                        <td>{{ $pd->prod_id }}</td>
-                                        <td>{{ $pd->prod_name }}</td>
-                                        <td>{{ $pd->prod_price }}</td>
+                                        <td>{{ $pd->product_id }}</td>
+                                        <td>{{ $pd->product_name }}</td>
+                                        <td>{{ $pd->qty }}</td>
+                                        <td>{{ $pd->price }}</td>
                                         <td class="text-center">
                                             <div class="flex align-items-center">
                                                 <a type="button" class="btn btn-primary" data-placement="top" data-toggle="tooltip" title=""
                                                 data-original-title="Choose"
-                                                href="{{ '/deliveryorders/product/'.$pd->prod_id }}">Choose</a>
+                                                href="{{ '/deliveryorders/product/'.$pd->product_id }}">Choose</a>
                                             </div>
                                         </td>
                                     </tr>
