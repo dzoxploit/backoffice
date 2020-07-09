@@ -120,3 +120,7 @@ Route::middleware(['myMiddleWare'])->group(function(){
 
 });
 
+Route::get('testing', function(){
+    return session()->all();
+});
+
