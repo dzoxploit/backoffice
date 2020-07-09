@@ -37,7 +37,7 @@ class DMlib
 
     public function getProductByName($query)
     {
-        $productData = $this->apiGet('http://api.duniamurah.com/api/products?where[]=prod_name,LIKE,%' . $query . '%');
+        $productData = $this->apiGet('http://api.duniamurah.com/api/products?where[]=prod_name,LIKE,%' . urlencode($query) . '%');
         
         return $productData->data;
     }
