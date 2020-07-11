@@ -8,7 +8,7 @@
             <div class="col-sm-12 align-self-center">
                 <div class="sign-in-from bg-white">
                     <h1 class="mb-0">Sign in</h1>
-                    <p>Enter your Username and Password to access adin panel.</p>
+                    <p>Enter your Username and Password to access admin panel.</p>
                     @if($message = Session::get('Success'))
                         <div class="alert alert-success alert-block">
                             <button type="button" class="close" data-dismiss="alert">×</button>
