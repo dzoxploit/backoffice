@@ -1,4 +1,3 @@
-
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -6,50 +5,6 @@ $.ajaxSetup({
 });
 
 $(document).ready(function () {
-    $("#search-product").click(function () {
-        var po_num, supplier, discount, type, note, date;
-
-        date = $("#po-date").val();
-        supplier = $("#supplier-option").val();
-        discount = $("#discount").val();
-        type = $("#discount-type").val();
-        note = $("#note").val();
-        po_num = $("#po-num").val();
-        date = $('#po-date').val();
-
-        $.ajax({
-            url: '/purchaseorders/temp/store',
-            method: "post",
-            data: {
-                po_num: po_num,
-                supplier: supplier,
-                discount: discount,
-                type: type,
-                date: date,
-                note: note,
-            },
-            success: function (response) {
-                window.location = "/purchaseorders/product";
-            },
-        });
-    });
-
-    $(".poDetailUpdate").click(function () {
-
-        var product_id = $(this).attr('dm-data');
-
-        $.ajax({
-            url: '/purchaseorders/detail/' + product_id + '/ajax',
-            method: "get",
-            success: function (response) {
-                console.log(response);
-                $('#poEditProductId').val(response.tempDetailPo.product_id);
-                $('#editDetailDiscount').val(response.tempDetailPo.discount);
-                $('#editDetailQty').val(response.tempDetailPo.qty);
-            },
-        });
-    });
-
     /**
      * Delivery Ordes
      * 
@@ -91,6 +46,7 @@ $(document).ready(function () {
         });
     });
 
+    
     $(".delivery-detail-edit").click(function () {
 
         var prod_id;
@@ -111,9 +67,44 @@ $(document).ready(function () {
         });
     });
 
+    $(".salesBargainDetailEdit").click(function () {
+
+        var prod_id;
+
+        prod_id = $(this).attr('dm-data')
+
+        $.ajax({
+            url: '/sales/bargains/detail/' + prod_id + '/ajax',
+            method: "GET",
+            success: function (response) {
+                $('#editBargainDetailProdId').val(response.detailData.product_id);
+                $('#editBargainDetailQty').val(response.detailData.qty);
+                $('#editBargainDetailBargainPrice').val(response.detailData.bargain_price);
+                $('#editBargainUnitPrice').val(response.detailData.unit_price);
+            },
+        });
+    });
+
+    $(".customerPoDetailEdit").click(function () {
+
+        var prod_id;
+
+        prod_id = $(this).attr('dm-data')
+
+        $.ajax({
+            url: '/sales/purchaseorders/detail/' + prod_id + '/ajax',
+            method: "GET",
+            success: function (response) {
+                $('#poEditProductIdCustomer').val(response.detailData.product_id);
+                $('#editDetailCustomerQty').val(response.detailData.qty);
+                $('#editDetailCustomerDiscount').val(response.detailData.discount);
+            },
+        });
+    });
+
     /** Check setelah typing berhenti beberapa saat **/
     var typingTimer;
-	
+
     $("#invoiceCreatePoId").on('keyup', function () {
         clearTimeout(typingTimer)
         typingTimer = setTimeout(checkInvoicePoId, 500)
@@ -139,10 +130,10 @@ $(document).ready(function () {
         });
     }
 
-    
+
     /** Check setelah typing berhenti beberapa saat Delivery Orders**/
     var deliveryTypingTimer;
-	
+
     $("#inputDeliveryPoId").on('keyup', function () {
         clearTimeout(deliveryTypingTimer)
         deliveryTypingTimer = setTimeout(checkDeliveryPoId, 500)
