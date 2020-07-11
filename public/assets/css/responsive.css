@@ -26,7 +26,7 @@ NOTE: This file contains the styling for responsive Template.
 	.iq-footer, body.sidebar-main .iq-footer { padding: 15px 10px; margin-left: 0; }
 	.iq-sidebar { display: inline-block; z-index: 99; left: -260px; }
 	.iq-top-navbar .iq-navbar-custom .navbar-breadcrumb { display: none; }
-	.iq-sidebar-logo { width: auto; background: transparent; }
+	.iq-sidebar-logo { background: transparent; }
 	.iq-top-navbar .iq-navbar-custom .iq-menu-bt { display: inline-block; position: absolute; right: 300px; opacity: 1; }
 	body.sidebar-main .iq-top-navbar .iq-sidebar-logo a span { opacity: 1; display: inline-block; }
 	body.sidebar-main .iq-sidebar { width: 260px; left: 0; }
