@@ -7,7 +7,7 @@
             <h4 class="card-title">{{ $pageTitle }}</h4>
         </div>
         <div>
-            <form action="{{ url('/purchaseorders/'.$po->po_id ?? '') }}" class="d-inline-block"
+            <form action="{{ url('/sales/purchaseorders/'.$po->po_id ?? '') }}" class="d-inline-block"
                 method="POST">
                 @method('delete')
                 @csrf
@@ -21,12 +21,12 @@
             <div class="col-8">
                 <table>
                     <tr>
-                        <td class="pr-4">Purchase Order ID </td>
+                        <td class="pr-4">Purchase Order ID (internal)</td>
                         <td>: {{ $po->po_id ?? '' }}</td>
                     </tr>
                     <tr>
-                        <td>Nama Supplier </td>
-                        <td>: {{ $po->sup_name ?? '' }}</td>
+                        <td>No. Purchase Order (External) </td>
+                        <td>: {{ $po->po_num ?? '' }}</td>
                     </tr>
                 </table>
             </div>
@@ -34,20 +34,19 @@
                 <table class="float-right">
                     <tr class="text-right">
                         <td class="pr-4">Tgl. PO :</td>
-                        <td>{{ !empty($po) ? date('Y-m-d', strtotime($po->date)) : '' }}</td>
+                        <td>{{ !empty($po) ? date('Y-m-d', strtotime($po->po_date)) : '' }}</td>
                     </tr>
                 </table>
             </div>
         </div>
-
+    
         <div class="row">
             <div class="col">
                 <label for="inputNote">Note :</label>
                 <textarea class="form-control" name="do-note" id="inputDeliveryDoNote" disabled readonly
-                    rows="2">{{ $po->note ?? '' }}</textarea>
+                    rows="2">{{ $po->po_note ?? '' }}</textarea>
             </div>
         </div>
-        </form>
         <table id="user-list-table" class="table table-striped table-bordered mt-4" role="grid"
             aria-describedby="user-list-page-info">
             <thead>
@@ -82,22 +81,22 @@
                         <tr>
                             <td class="">Discount</td>
                             @php
-                            if ($po->type == '%') {
-                                $poDiscount = $po->discount.$po->type;
-                            }elseif ($po->type == '$') {
-                                $poDiscount = "Rp " . number_format($po->discount,2,',','.');
+                            if ($po->po_discount_type == '%') {
+                                $poDiscount = $po->po_discount.$po_discount_type;
+                            }elseif ($po->po_discount_type == '$') {
+                                $poDiscount = "Rp " . number_format($po->po_discount,2,',','.');
                             }
                             @endphp
                             <td class="text-left pl-5">
-                                : {{ $poDiscount ?? '' }}
+                               : {{ $poDiscount }}
                             </td>
                         </tr>
                         <tr>
                             @php
-                            if ($po->type == '%') {
-                                $discount = $subTotal * $po->discount/100;
+                            if ($po->po_discount_type == '%') {
+                                $discount = $subTotal * $po->po_discount/100;
                                 $totalHarga = $subTotal - $discount;
-                            }elseif ($po->type == '$') {
+                            }elseif ($po->po_discount_type == '$') {
                                 $totalHarga = $subTotal - $po->discount;
                             }
                             @endphp

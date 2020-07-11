@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Backoffice - {{ $pageTitle ?? 'Untitled Page' }}</title>
+    <link rel="stylesheet" href=" {{ asset('assets/css/dm.css') }} ">
     <!-- Favicon -->
     <link rel="shortcut icon" href=" {{ asset('assets/images/favicon.ico') }} " />
     <!-- Bootstrap CSS -->
@@ -17,6 +18,7 @@
     <link rel="stylesheet" href=" {{ asset('assets/css/style.css') }}">
     <!-- Responsive CSS -->
     <link rel="stylesheet" href=" {{ asset('assets/css/responsive.css') }} ">
+
 
 </head>
 
@@ -49,7 +51,7 @@
                     </ul>
                 </div>
                 <div class="col-lg-6 text-right">
-                    Copyright 2020 <a href="#">Metorik</a> All Rights Reserved.
+                    Copyright 2020 <a href="{{ url('/') }}">DMBackOffice</a> All Rights Reserved.
                 </div>
             </div>
         </div>
@@ -94,6 +96,8 @@
     <script src="{{ asset('assets/js/custom.js') }}"></script>
 
     <script src="{{ asset('assets/js/dm.js') }}"></script>
+
+    @yield('script')
 </body>
 
 </html>

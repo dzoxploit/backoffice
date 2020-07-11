@@ -1,11 +1,10 @@
 <!-- TOP Nav Bar -->
 <div class="iq-top-navbar">
     <div class="iq-navbar-custom">
-       <div class="iq-sidebar-logo">
-          <div class="top-logo">
+       <div class="iq-sidebar-logo dm-sidebar-logo">
+          <div class="top-logo dm-top-logo">
              <a href="index.html" class="logo">
-             <img src=" {{ url('/assets/images/logo.gif') }} " class="img-fluid" alt="">
-             <span>Metorik</span>
+             <img src=" {{ url('/assets/images/dmlogo.svg') }} " class="img-fluid"  alt="">
              </a>
           </div>
        </div>

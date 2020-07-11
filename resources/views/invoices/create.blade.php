@@ -54,6 +54,45 @@
             </div>
         </div>
         </form>
+        <div class="clearfix py-3">
+            <div class="card float-right total-info">
+                <div class="card-body">
+                    <table>
+                        <tr>
+                            <td class="text-right pl-5">Po Total : </td>
+                            <td class="text-right pl-5" id="invoiceTotal">Rp. 0,00</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right pl-5">
+                            </td>
+                            <td class="text-right pl-5">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input ppnswitch" id="customSwitch1">
+                                    <label class="custom-control-label" for="customSwitch1">PPN 10%</label>
+                                 </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right pl-5">Pajak : </td>
+                            <td class="text-right pl-5" id="invoiceppn">Rp. 0,00</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right pl-5">Total Harga : </td>
+                            <td class="text-right pl-5" id="invoiceppn">Rp. 0,00</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right pl-5">Harga Bayar :</td>
+                            <td class="text-right pl-5">
+                                <input type="text" placeholder="" id="discount" class="dm-input">
+                            </td>
+                        </tr>
+                    </table>
+                    <button class="float-right my-2 mx-1 btn btn-primary" id="savePurchaseOrder">Save</button>
+                    <a href="{{ url('/purchaseorders/temp/reset') }}"><button class="float-right my-2 btn btn-danger">Reset</button></a>
+
+                </div>
+            </div>
+        </div>
         <!-- <div class="row justify-content-between mt-3">
             <div id="user-list-page-info" class="col-md-6">
                 <span>Showing 1 to 5 of 5 entries</span>
@@ -222,4 +261,7 @@
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+<script src="{{ asset('/assets/js/ajax/invoice.js') }}"></script>
 @endsection

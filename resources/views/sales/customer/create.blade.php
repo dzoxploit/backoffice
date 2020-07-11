@@ -7,7 +7,7 @@
             <div class="iq-card">
                 <div class="iq-card-header d-flex justify-content-between">
                     <div class="iq-header-title">
-                        <h4 class="card-title">Add New Supplier</h4>
+                        <h4 class="card-title">{{ $pageTitle ?? 'Untitle Page' }}</h4>
                     </div>
                 </div>
                 <div class="iq-card-body">
@@ -30,14 +30,14 @@
                             </div>
                         </div>
                     </div>
-                </div> 
+                </div>
             </div>
         </div>
         <div class="col-lg-9">
             <div class="iq-card">
                 <div class="iq-card-header d-flex justify-content-between">
                     <div class="iq-header-title">
-                        <h4 class="card-title">New Supplier Information</h4>
+                        <h4 class="card-title">Informasi Pelanggan Baru</h4>
                     </div>
                 </div>
                 <div class="iq-card-body">
@@ -52,14 +52,8 @@
                             @csrf
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label class="form-control-label">Supplier Name</label>
-                                    <input type="text" name="sup_name" class="form-control" placeholder="Masukan Nama Supplier"
-                                        required />
-                                    <small class="help-block with-errors text-danger"></small>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="form-control-label">Email</label>
-                                    <input type="email" name="sup_email" class="form-control" placeholder="Masukan Email Supplier"
+                                    <label class="form-control-label">Nama Pelanggan</label>
+                                    <input type="text" name="customer-name" class="form-control" placeholder="Enter username"
                                         required />
                                     <small class="help-block with-errors text-danger"></small>
                                 </div>
@@ -68,48 +62,29 @@
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label class="form-control-label">Alamat</label>
-                                    <input type="text" name="sup_address" class="form-control" placeholder="Masukan Alamat"
+                                    <input type="text" name="customer-address" class="form-control" placeholder="Enter Address"
                                         required />
                                     <small class="help-block with-errors text-danger"></small>
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label class="form-control-label">Alamat 2</label>
-                                    <input type="text" name="sup_address2" class="form-control"
-                                        placeholder="Masukan Alamat" required />
+                                    <label class="form-control-label">No. Telp</label>
+                                    <input type="text" name="customer-no-telp" class="form-control"
+                                        placeholder="Enter No telp" required />
                                     <small class="help-block with-errors text-danger"></small>
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label class="form-control-label">Phone Number</label>
-                                    <input type="text" name="sup_cp" class="form-control"
-                                        placeholder="Masukan Nomor Telepon" required />
+                                    <label class="form-control-label">Perusahaan</label>
+                                    <input type="text" name="customer-company" class="form-control"
+                                        placeholder="Enter Perusahaan" required />
                                     <small class="help-block with-errors text-danger"></small>
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label class="form-control-label">Phone Number 2</label>
-                                    <input type="text" name="sup_cp2" class="form-control"
-                                        placeholder="Masukan Nomor Telepon" required />
-                                    <small class="help-block with-errors text-danger"></small>
-                                </div>
-
-
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-control-label">Description</label>
-                                <textarea name="sup_desc" id="" cols="30" rows="2" required class="form-control" placeholder="Masukan Deskripsi"></textarea>
-                                <small class="help-block with-errors text-danger"></small>
-                            </div>
-
-                            <hr>
-                            <h5 class="mb-3">Account</h5>
-                            <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label for="no-rek-giro" name="password" class="form-control-label">No. Rekening Giro</label>
-                                    <input type="text" name="sup_rek_giro" class="form-control"
-                                        placeholder="Masukan Nomor Rekening" id="no-rek-giro" required />
+                                    <label class="form-control-label">Departemen</label>
+                                    <input type="text" name="customer-department" class="form-control"
+                                        placeholder="Enter Departemen" required />
                                     <small class="help-block with-errors text-danger"></small>
                                 </div>
                             </div>

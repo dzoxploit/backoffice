@@ -53,8 +53,6 @@
                                 <tr>
                                     <th>PO ID</th>
                                     <th>Supplier</th>
-                                    <th>Discount</th>
-                                    <th>Discount Type</th>
                                     <th>PO Date</th>
                                     <th>Action</th>
                                 </tr>
@@ -64,8 +62,6 @@
                                     <tr>
                                         <td>{{ $po->po_id }}</td>
                                         <td>{{ $po->sup_name }}</td>
-                                        <td>{{ $po->discount }}</td>
-                                        <td>{{ $po->type }}</td>
                                         <td>{{ $po->date }}</td>
                                         <td class="text-center">
                                             <div class="flex align-items-center">

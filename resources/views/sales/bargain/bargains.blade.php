@@ -7,15 +7,26 @@
             <div class="iq-card">
                 <div class="iq-card-header d-flex justify-content-between">
                     <div class="iq-header-title">
-                        <h4 class="card-title">Supplier List</h4>
+                        <h4 class="card-title">{{ $pageTitle }}</h4>
                     </div>
-                    <a href="{{ url('suppliers/new') }}" class="btn btn-primary">
-                        Add New Supplier
-                    </a>
+                    <div>
+                        <a type="button" href="{{ url('/sales/bargains/new') }}" class="btn btn-primary">
+                            Tambah Penawaran Baru
+                        </a>
+                    </div>
                 </div>
                 <div class="iq-card-body">
                     @if($message = Session::get('Success'))
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>{{ $message }}</strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+
+                    @if($message = Session::get('Error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <strong>{{ $message }}</strong>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -35,46 +46,36 @@
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                            
+
                             </div>
                         </div>
                         <table id="user-list-table" class="table table-striped table-bordered mt-4" role="grid"
                             aria-describedby="user-list-page-info">
                             <thead>
                                 <tr>
-                                    <th>Profile</th>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Alamat</th>
-                                    <th>Alamat 2</th>
-                                    <th>No. Telp</th>
-                                    <th>No. Telp 2</th>
-                                    <th>Rek. Giro</th>
+                                    <th>ID Penawaran</th>
+                                    <th>Nama Customer</th>
+                                    <th>Dibuat Oleh</th>
+                                    <th>Discount</th>
+                                    <th>Expr. Penawaran</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($suppliers as $sup)
+                                @foreach($bargains as $brg)
                                     <tr>
-                                        <td class="text-center"><img class="rounded-circle img-fluid avatar-40"
-                                                src="{{ url('assets/images/user/01.jpg') }}"
-                                                alt="profile"></td>
-                                        <td>{{ $sup->sup_id }}</td>
-                                        <td>{{ $sup->sup_name }}</td>
-                                        <td>{{ $sup->sup_email }}</td>
-                                        <td>{{ $sup->sup_address }}</td>
-                                        <td>{{ $sup->sup_address2 }}</td>
-                                        <td>{{ $sup->sup_cp }}</td>
-                                        <td>{{ $sup->sup_cp2 }}</td>
-                                        <td>{{ $sup->sup_rek_giro }}</td>
+                                        <td>{{ $brg->bargain_id }}</td>
+                                        <td>{{ $brg->customer_fullname }}</td>
+                                        <td>{{ $brg->created_by }}</td>
+                                        <td>{{ $brg->discount.$brg->discount_type }}</td>
+                                        <td>{{ $brg->bargain_expr }}</td>
                                         <td class="text-center">
                                             <div class="flex align-items-center">
-                                                <a type="button" class="btn btn-warning" data-placement="top" data-toggle="tooltip" title=""
-                                                data-original-title="Edit"
-                                                href="{{ 'suppliers/'.$sup->sup_id.'/edit' }}">Update</a>
-
-                                                <form action="{{ url('suppliers/'.$sup->sup_id) }}"
+                                                <a type="button" class="btn btn-info" data-placement="top"
+                                                    data-toggle="tooltip" title="" data-original-title="Edit"
+                                                    href="{{ '/sales/bargains/'.$brg->bargain_id }}">Detail</a>
+                                                <form
+                                                    action="{{ url('/sales/bargains/'.$brg->bargain_id) }}"
                                                     method="post" class="d-inline-block">
                                                     @method('delete')
                                                     @csrf
@@ -109,6 +110,31 @@
                                 </ul>
                             </nav>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="salesPoOptions" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Choose One</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <button class="btn btn-primary">Tambah Baru</button>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#salesPoOpenBargain" data-dismiss="modal">Buka penawaran ?</button>
                     </div>
                 </div>
             </div>

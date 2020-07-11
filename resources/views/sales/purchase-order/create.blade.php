@@ -6,37 +6,71 @@
         <div class="iq-header-title">
             <h4 class="card-title">New Purchase Order</h4>
         </div>
+        <div>
+            <a data-toggle="tooltip" data-placement="top" class="btn btn-primary"
+                href="{{ url('/sales/purchaseorders/temp/reset') }}">Reset</a>
+            <form action="{{ url()->current() }}" method="POST" class="d-inline-block">
+                @csrf
+                <button type="submit" data-toggle="tooltip" data-placement="top" id="save-purchase-order"
+                    class="btn btn-primary">Save</button>
+        </div>
     </div>
     <div class="iq-card-body">
+       
         <div class="row">
             <div class="col-8">
                 <div class="form-group row">
-                    <label for="supplier-option" class="col-2 col-form-label">Supplier :</label>
+                    <label for="po-num" class="col-3 col-form-label">No. PO Internal:</label>
                     <div class="col">
-                        <select class="form-control" name="sup_id" id="supplier-option">
-                            <option value="0">Choose Supplier</option>
-                            @foreach($suppliers as $spl)
-                                <option value="{{ $spl->sup_id }}"
-                                    {{ $spl->sup_id == !empty($tempPo->sup_id) ? 'selected' : '' }}>
-                                    {{ $spl->sup_name }}</option>
+                        <input class="form-control" type="text" name="purchase-order-po-id" id="inputPurchaseOrderCustomerPoId"
+                            value="{{ $tempPo->po_id ?? '' }}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="supplier-option" class="col-2 col-form-label">Customer :</label>
+                    <div class="col">
+                        <select class="form-control" name="purchase-order-customer-id" id="inputPurchaseOrderCustomerId">
+                            <option value="0">Choose Customer</option>
+                            @foreach($customers as $cstmr)
+                                <option value="{{ $cstmr->customer_id }}"
+                                    {{ $tempPo->customer_id ?? 0 == $cstmr->customer_id  ? 'selected' : '' }}>{{ $cstmr->fullname }}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="po-num" class="col-2 col-form-label">No. PO :</label>
+                    <label for="discount" class="col-2 col-form-label">Discount :</label>
                     <div class="col">
-                        <input class="form-control" type="text" name="po_id" id="po-num"
-                            value="{{ $tempPo->po_id ?? '' }}">
+                        <input class="form-control" type="text" name="purchase-order-discount" id="inputPurchaseOrderCustomerPoDiscount"
+                            value="{{ $tempPo->po_discount ?? '' }}">
+                    </div>
+                    <div class="col-3">
+                        <select class="form-control" name="purchase-order-type" id="inputPurchaseOrderCustomerDiscountType">
+                            <option value="0">Discount Type</option>
+                            <option value="%"
+                                {{ !empty($tempPo->po_discount_type) == '%' ? 'selected' : '' }}>
+                                %</option>
+                            <option value="$"
+                                {{ !empty($tempPo->po_discount_type) == '$' ? 'selected' : '' }}>
+                                $</option>
+                        </select>
                     </div>
                 </div>
             </div>
             <div class="col-4">
+                
                 <div class="form-group row">
-                    <label for="po-date" class="col-2 col-form-label">Tgl :</label>
+                    <label for="po-num" class="col-3 col-form-label">No. PO :</label>
                     <div class="col">
-                        <input class="form-control" type="date" id="po-date" name="date"
-                            value="{{ $tempPo->date ?? '' }}">
+                        <input class="form-control" type="text" name="purchase-order-po-num" id="inputPurchaseOrderCustomerPoNum"
+                            value="{{ $tempPo->po_id ?? '' }}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="po-num" class="col-3 col-form-label">ID. Penawaran:</label>
+                    <div class="col">
+                        <input class="form-control" type="text" name="purchase-order-id-penawaran" id="inputPurchaseOrderCustomerIdPenawaran"
+                            value="{{ $tempPo->po_num ?? '' }}">
                     </div>
                 </div>
             </div>
@@ -45,12 +79,13 @@
         <div class="row">
             <div class="col">
                 <label for="note">Note :</label>
-                <textarea class="form-control" name="note" id="note"
-                    rows="2">{{ $tempPo->note ?? '' }}</textarea>
+                <textarea class="form-control" name="purchase-order-note" id="inputPurchaseOrderCustomerNote"
+                    rows="2">{{ $tempPo->po_note ?? '' }}</textarea>
             </div>
         </div>
+        </form>
         <div class="d-flex float-right my-2">
-            <button class="btn btn-primary" id="search-product">
+            <button class="btn btn-primary" id="purchaseOrderProductSearchProduct">
                 Add Product
             </button>
         </div>
@@ -72,23 +107,16 @@
                         <td>{{ $tdpo->product_id }}</td>
                         <td>{{ $tdpo->product_name }}</td>
                         <td>{{ $tdpo->qty }}</td>
-                        @php
-                            $hargaDetail = $tdpo->price * $tdpo->qty;
-                            $discount = ($tdpo->discount/100) * $hargaDetail;
-                            $subTotal = $hargaDetail - $discount;
-                        @endphp
-                        <td>{{ "Rp. " . number_format($subTotal,2,',','.') }}
-                        </td>
+                        <td>{{ "Rp " . number_format($tdpo->price,2,',','.') }}</td>
                         <td>{{ $tdpo->discount.'%' }}</td>
                         <td>
                             <div class="flex align-items-center list-user-action">
-                                <button class="btn btn-warning poDetailUpdate" data-toggle="modal"
-                                    data-target="#editdetail" data-placement="top" title="" data-original-title="Edit"
-                                    data-id="product-detail-update" data-content=""
-                                    dm-data="{{ $tdpo->product_id }}">Edit</button>
+                                <button class="btn btn-warning customerPoDetailEdit" data-toggle="modal" data-target="#editdetail" data-placement="top" title=""
+                                    data-original-title="Edit" data-id="product-detail-update"
+                                    data-content="" dm-data="{{ $tdpo->product_id }}">Edit</button>
 
                                 <form
-                                    action="{{ url('/purchaseorders/temp/detail/'.$tdpo->product_id) }}"
+                                    action="{{ url('/sales/purchaseorders/temp/detail/'.$tdpo->product_id) }}"
                                     method="post" class="d-inline-block">
                                     @method('delete')
                                     @csrf
@@ -102,38 +130,7 @@
                 @endforeach
             </tbody>
         </table>
-        <div class="clearfix py-3">
-            <div class="card float-right total-info">
-                <div class="card-body">
-                    <table>
-                        <tr>
-                            <td class="text-right pl-5">Sub Total :</td>
-                            <td class="text-right pl-5" id="purchaseOrderSubTotalHarga">-</td>
-                        </tr>
-                        <tr>
-                            <td class="text-right pl-5">Discount :</td>
-                            <td class="text-right pl-5">
-                                <input type="text" placeholder="" id="purchaseOrderDiscount" class="dm-input">
-                                <select id="purchaseOrderDiscountType" class="dm-input-dropdown">
-                                    <option value="%">%</option>
-                                    <option value="$">Rp.</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-right pl-5 h4" style="padding: 1rem 0">Total :</td>
-                            <td class="text-right pl-5 h4" style="padding: 1rem 0" id="purchaseOrderTotalHarga">-</td>
-                        </tr>
-                    </table>
-                    <button class="float-right my-2 mx-1 btn btn-primary" id="savePurchaseOrder">Save</button>
-                    <a href="{{ url('/purchaseorders/temp/reset') }}"><button
-                            class="float-right my-2 btn btn-danger">Reset</button></a>
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- <div class="row justify-content-between mt-3">
+        <!-- <div class="row justify-content-between mt-3">
             <div id="user-list-page-info" class="col-md-6">
                 <span>Showing 1 to 5 of 5 entries</span>
             </div>
@@ -153,7 +150,7 @@
                 </nav>
             </div>
         </div> -->
-</div>
+    </div>
 
 </div>
 
@@ -168,19 +165,19 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ url('purchaseorders/temp/detail') }}" method="POST">
+            <form action="{{ url('/sales/purchaseorders/temp/detail') }}" method="POST">
                 @csrf
                 @method('patch')
                 <div class="modal-body">
                     <div class="row">
-                        <input type="text" name="prod_id" id="poEditProductId" hidden>
+                        <input type="text" name="prod_id" id="poEditProductIdCustomer" hidden>
                         <div class="col-6">
                             <label for="discount">Qty</label>
-                            <input type="number" class="form-control" name="qty" id="editDetailQty" value="1">
+                            <input type="number" class="form-control" name="qty" id="editDetailCustomerQty" value="1">
                         </div>
                         <div class="col-6">
                             <label for="discount">Discount</label>
-                            <input type="number" class="form-control" name="discount" id="editDetailDiscount" value="">
+                            <input type="number" class="form-control" name="discount" id="editDetailCustomerDiscount" value="">
                             <small>angka dalam persen (%)</small>
                         </div>
                     </div>
@@ -195,5 +192,5 @@
 </div>
 @endsection
 @section('script')
-<script src="{{ asset('/assets/js/ajax/purchase-order.js') }}"></script>
+<script src="{{ asset('/assets/js/ajax/salespurchase-order.js') }}"></script>
 @endsection

@@ -41,10 +41,12 @@
                     </div>
                 </div>
                 <div class="iq-card-body">
-                    @if($message = Session::get('Error'))
-                        <div class="alert alert-danger alert-block">
-                            <button type="button" class="close" data-dismiss="alert">×</button>
+                    @if($message = Session::get('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <strong>{{ $message }}</strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
                     @endif
                     <div class="new-user-info">
@@ -76,7 +78,7 @@
                                     <label for="userCreateRole" class="form-control-label">Role</label>
                                     <select name="role" id="userCreateRole" class="form-control">
                                         <option value="NULL">Select Role</option>
-                                        @foreach ($roles as $rl)
+                                        @foreach($roles as $rl)
                                             <option value="{{ $rl->role_id }}">{{ $rl->role_name }}</option>
                                         @endforeach
                                     </select>

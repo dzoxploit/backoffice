@@ -46,7 +46,6 @@
                                     <th>No. Invoice</th>
                                     <th>Invoice Date</th>
                                     <th>PO ID</th>
-                                    <th>Confirm Date</th>
                                     <th>Due Date</th>
                                     <th>Action</th>
                                 </tr>
@@ -58,7 +57,6 @@
                                         <td>{{ $inv->no_invoice }}</td>
                                         <td>{{ $inv->invoice_date }}</td>
                                         <td>{{ $inv->po_id }}</td>
-                                        <td>{{ $inv->confirm_date }}</td>
                                         <td>{{ $inv->due_date }}</td>
                                         <td class="text-center">
                                             <div class="flex align-items-center">

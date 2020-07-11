@@ -7,11 +7,8 @@
             <div class="iq-card">
                 <div class="iq-card-header d-flex justify-content-between">
                     <div class="iq-header-title">
-                        <h4 class="card-title">Supplier List</h4>
+                        <h4 class="card-title">Search Product</h4>
                     </div>
-                    <a href="{{ url('suppliers/new') }}" class="btn btn-primary">
-                        Add New Supplier
-                    </a>
                 </div>
                 <div class="iq-card-body">
                     @if($message = Session::get('Success'))
@@ -26,10 +23,10 @@
                         <div class="row justify-content-between">
                             <div class="col-sm-12 col-md-6">
                                 <div id="user_list_datatable_info" class="dataTables_filter">
-                                    <form class="mr-3 position-relative">
+                                    <form class="mr-3 position-relative" action="{{ url()->current() }}" method="GET">
                                         <div class="form-group mb-0">
                                             <input type="search" class="form-control" id="exampleInputSearch"
-                                                placeholder="Search" aria-controls="user-list-table">
+                                                placeholder="Search" name="q" aria-controls="user-list-table">
                                         </div>
                                     </form>
                                 </div>
@@ -42,46 +39,23 @@
                             aria-describedby="user-list-page-info">
                             <thead>
                                 <tr>
-                                    <th>Profile</th>
-                                    <th>ID</th>
+                                    <th>Product ID</th>
                                     <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Alamat</th>
-                                    <th>Alamat 2</th>
-                                    <th>No. Telp</th>
-                                    <th>No. Telp 2</th>
-                                    <th>Rek. Giro</th>
+                                    <th>Price</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($suppliers as $sup)
+                                @foreach($product as $pd)
                                     <tr>
-                                        <td class="text-center"><img class="rounded-circle img-fluid avatar-40"
-                                                src="{{ url('assets/images/user/01.jpg') }}"
-                                                alt="profile"></td>
-                                        <td>{{ $sup->sup_id }}</td>
-                                        <td>{{ $sup->sup_name }}</td>
-                                        <td>{{ $sup->sup_email }}</td>
-                                        <td>{{ $sup->sup_address }}</td>
-                                        <td>{{ $sup->sup_address2 }}</td>
-                                        <td>{{ $sup->sup_cp }}</td>
-                                        <td>{{ $sup->sup_cp2 }}</td>
-                                        <td>{{ $sup->sup_rek_giro }}</td>
+                                        <td>{{ $pd->prod_id }}</td>
+                                        <td>{{ $pd->prod_name }}</td>
+                                        <td>{{ $pd->prod_price }}</td>
                                         <td class="text-center">
                                             <div class="flex align-items-center">
-                                                <a type="button" class="btn btn-warning" data-placement="top" data-toggle="tooltip" title=""
-                                                data-original-title="Edit"
-                                                href="{{ 'suppliers/'.$sup->sup_id.'/edit' }}">Update</a>
-
-                                                <form action="{{ url('suppliers/'.$sup->sup_id) }}"
-                                                    method="post" class="d-inline-block">
-                                                    @method('delete')
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-danger" data-toggle="tooltip"
-                                                        data-placement="top" title=""
-                                                        data-original-title="Delete">Delete</button>
-                                                </form>
+                                                <a type="button" class="btn btn-primary" data-placement="top" data-toggle="tooltip" title=""
+                                                data-original-title="Choose"
+                                                href="{{ '/sales/purchaseorders/temp/detail/'.$pd->prod_id }}">Choose</a>
                                             </div>
                                         </td>
                                     </tr>

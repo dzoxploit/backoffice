@@ -10,9 +10,9 @@
                         <h4 class="card-title">Purchase Order</h4>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#salesPoOptions">
+                        <a type="button" href="{{ url('/sales/purchaseorders/new') }}" class="btn btn-primary">
                             Add New PO
-                        </button>
+                        </a>
                     </div>
                 </div>
                 <div class="iq-card-body">
@@ -54,34 +54,36 @@
                             <thead>
                                 <tr>
                                     <th>PO ID</th>
-                                    <th>Supplier</th>
+                                    <th>No. PO</th>
+                                    <th>Nomor Penawaran</th>
+                                    <th>Customer</th>
                                     <th>Discount</th>
-                                    <th>Discount Type</th>
-                                    <th>PO Date</th>
+                                    <th>Tgl Entri</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($purchaseOrder as $po)
+                                @foreach($purchaseOrderCustomers as $poc)
                                     <tr>
-                                        <td>{{ $po->po_id }}</td>
-                                        <td>{{ $po->sup_name }}</td>
-                                        <td>{{ $po->discount }}</td>
-                                        <td>{{ $po->type }}</td>
-                                        <td>{{ $po->date }}</td>
+                                        <td>{{ $poc->po_id }}</td>
+                                        <td>{{ $poc->po_num }}</td>
+                                        <td>{{ $poc->id_penawaran }}</td>
+                                        <td>{{ $poc->fullname }}</td>
+                                        <td>{{ $poc->po_discount.$poc->po_discount_type }}</td>
+                                        <td>{{ $poc->created_at }}</td>
                                         <td class="text-center">
                                             <div class="flex align-items-center">
                                                 <a type="button" class="btn btn-info" data-placement="top"
                                                     data-toggle="tooltip" title="" data-original-title="Edit"
-                                                    href="{{ '/purchaseorders/'.$po->po_id }}">Detail</a>
+                                                    href="{{ '/sales/purchaseorders/'.$poc->po_id }}">Detail</a>
 
                                                 {{-- <a type="button" class="btn btn-warning" data-placement="top" data-toggle="tooltip" title=""
                                                 data-original-title="Edit"
-                                                href="{{ 'users/'.$po->id_user.'/edit' }}">Update</a>
+                                                href="{{ 'users/'.$poc->id_user.'/edit' }}">Update</a>
                                                 --}}
 
                                                 <form
-                                                    action="{{ url('/purchaseorders/'.$po->po_id) }}"
+                                                    action="{{ url('/sales/purchaseorders/'.$poc->po_id) }}"
                                                     method="post" class="d-inline-block">
                                                     @method('delete')
                                                     @csrf
@@ -143,24 +145,6 @@
                         <button class="btn btn-primary" data-toggle="modal" data-target="#salesPoOpenBargain" data-dismiss="modal">Buka penawaran ?</button>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="salesPoOpenBargain" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Choose One</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <input type="text" placeholder="Masukan kode bargain">
             </div>
         </div>
     </div>
