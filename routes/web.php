@@ -58,6 +58,8 @@ Route::middleware(['myMiddleWare'])->group(function(){
     Route::delete('/purchaseorders/temp/detail/{prod_id}', 'PurchaseOrderController@destroyProduct');
     Route::get('/purchaseorders/temp/reset', 'PurchaseOrderController@resetTempPo');
     Route::patch('/purchaseorders/temp/detail', 'PurchaseOrderController@updateTempDetail');
+    Route::get('/purchaseorders/detail/calculation/ajax', 'PurchaseOrderController@getCalcData');
+    Route::get('/purchaseorders/detail/calculation/discount/ajax', 'PurchaseOrderController@getCalcDiscountData');
     Route::get('/purchaseorders/detail/{prod_id}/ajax', 'PurchaseOrderController@getTempDetail');
 
     //Invoice
@@ -68,6 +70,9 @@ Route::middleware(['myMiddleWare'])->group(function(){
     Route::get('/invoices/{invoice_id}/edit', 'InvoiceController@show');
     Route::put('/invoices/{invoice_id}', 'InvoiceController@update');
     Route::delete('/invoices/{invoice_id}', 'InvoiceController@destroy');
+    Route::get('/invoices/po/calculation/discount/ajax', 'invoiceController@getCalcDiscountData');
+    Route::get('/invoices/po/calculation/ppn/ajax', 'invoiceController@getCalcPpnData');
+
 
     /* Begin Delivery Orders */
 
@@ -103,21 +108,50 @@ Route::middleware(['myMiddleWare'])->group(function(){
     Route::patch('/couriers/{courier_id}', 'CourierController@update');
     Route::delete('/couriers/{courier_id}', 'CourierController@destroy');
 
+
+    Route::get('/sales/customers', 'Sales\CustomerController@index');
+    Route::get('/sales/customers/new', 'Sales\CustomerController@create');
+    Route::post('/sales/customers/new', 'Sales\CustomerController@store');
+    Route::get('/sales/customers/{customer_id}/edit', 'Sales\CustomerController@show');
+    Route::patch('/sales/customers/{customer_id}', 'Sales\CustomerController@edit');
+    Route::delete('/sales/customers/{customer_id}', 'Sales\CustomerController@destroy');
+
     //PurchaseOrders
-    Route::get('/sales/purchaseorders', 'Sales\PurchaseOrderController@index');
-    Route::get('/sales/purchaseorders/new', 'Sales\PurchaseOrderController@create');
-    Route::post('/sales/purchaseorders/temp/store', 'Sales\PurchaseOrderController@tempStore');
-    Route::get('/sales/purchaseorders/product', 'Sales\PurchaseOrderController@showProduct');
+    Route::get('/sales/purchaseorders', 'Sales\PurchaseOrderCustomerController@index');
+    Route::get('/sales/purchaseorders/new', 'Sales\PurchaseOrderCustomerController@create');
+    Route::post('/sales/purchaseorders/temp/store', 'Sales\PurchaseOrderCustomerController@tempStore');
+    Route::get('/sales/purchaseorders/product', 'Sales\PurchaseOrderCustomerController@showProduct');
+    Route::get('/sales/purchaseorders/temp/detail/{prod_id}', 'Sales\PurchaseOrderCustomerController@storeTempDetail');
+    Route::get('/sales/purchaseorders/detail/{product_id}/ajax', 'Sales\PurchaseOrderCustomerController@getTempDetail');
+    Route::patch('/sales/purchaseorders/temp/detail', 'Sales\PurchaseOrderCustomerController@updateTempDetail');
+    Route::delete('/sales/purchaseorders/temp/detail/{prod_id}', 'Sales\PurchaseOrderCustomerController@destroyProductTempDetail');
+    Route::get('/sales/purchaseorders/temp/reset', 'Sales\PurchaseOrderCustomerController@resetTempPo');
+    Route::post('/sales/purchaseorders/new', 'Sales\PurchaseOrderCustomerController@store');
+    Route::get('/sales/purchaseorders/{po_id}', 'Sales\PurchaseOrderCustomerController@detail');
+    Route::delete('/sales/purchaseorders/{po_id}', 'Sales\PurchaseOrderCustomerController@destroy');
 
-    // Route::post('/purchaseorders/new', 'PurchaseOrderController@store');
-    // Route::get('/purchaseorders/{po_id}', 'PurchaseOrderController@detail');
-    // Route::delete('/purchaseorders/{po_id}', 'PurchaseOrderController@destroy');
-    // Route::get('/purchaseorders/temp/detail/{prod_id}', 'PurchaseOrderController@storeTempDetail');
-    // Route::delete('/purchaseorders/temp/detail/{prod_id}', 'PurchaseOrderController@destroyProduct');
-    // Route::get('/purchaseorders/temp/reset', 'PurchaseOrderController@resetTempPo');
-    // Route::patch('/purchaseorders/temp/detail', 'PurchaseOrderController@updateTempDetail');
-    // Route::get('/purchaseorders/detail/{prod_id}/ajax', 'PurchaseOrderController@getTempDetail');
+    //bargain
+    Route::get('/sales/bargains', 'Sales\BargainCustomerController@index');
+    Route::get('/sales/bargains/new', 'Sales\BargainCustomerController@create');
+    Route::post('/sales/bargains/new', 'Sales\BargainCustomerController@store');
+    Route::post('/sales/bargains/temp/store', 'Sales\BargainCustomerController@tempStore');
+    Route::get('/sales/bargains/product', 'Sales\BargainCustomerController@showProduct');
+    Route::get('/sales/bargains/temp/detail/{prod_id}', 'Sales\BargainCustomerController@storeTempDetail');
+    Route::get('/sales/bargains/detail/calculation/ajax', 'Sales\BargainCustomerController@getCalcData');
+    Route::get('/sales/bargains/detail/calculation/discount/ajax', 'Sales\BargainCustomerController@getCalcDiscountData');
+    Route::get('/sales/bargains/detail/{prod_id}/ajax', 'Sales\BargainCustomerController@getTempDetail');
+    Route::patch('/sales/bargains/temp/detail', 'Sales\BargainCustomerController@updateTempDetail');
+    Route::delete('/sales/bargains/temp/detail/{prod_id}', 'Sales\BargainCustomerController@destroyProductTempDetail');
+    Route::get('/sales/bargains/temp/reset', 'Sales\BargainCustomerController@resetTempBargain');
+    Route::delete('/sales/bargains/{bargain_id}', 'Sales\BargainCustomerController@destroy');
+    Route::get('/sales/bargains/{bargain_id}', 'Sales\BargainCustomerController@detail');
 
+
+  
+
+
+
+    
 });
 
 Route::get('testing', function(){
