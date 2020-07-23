@@ -31,7 +31,8 @@ class CustomerController extends Controller
             'address' => request('customer-address'),
             'no_telp' => request('customer-no-telp'),
             'company' => request('customer-company'),
-            'department' => request('customer-department')
+            'department' => request('customer-department'),
+            'warehouse_address' => request('warehouse-address'),
         ];
 
         Customer::create($customerData);

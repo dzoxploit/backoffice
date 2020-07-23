@@ -17,7 +17,7 @@ class CreateCouriersTable extends Migration
             $table->bigIncrements('courier_id');
             $table->string('courier_name');
             $table->string('courier_contact');
-            $table->string('address');
+            $table->string('courier_address');
             $table->timestamps();
             $table->softDeletes();
         });

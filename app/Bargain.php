@@ -11,7 +11,5 @@ class Bargain extends Model
 
     protected $table = 'bargains';
     protected $primaryKey = 'bargain_id';
-    protected $keyType = 'string';
-    public $incrementing = false;
-    protected $fillable = ['bargain_id', 'customer_id', 'created_by', 'updated_by', 'discount', 'discount_type', 'bargain_expr', 'bargain_note', 'bargain_closed'];
+    protected $fillable = ['bargain_id', 'bargain_id_format', 'customer_id', 'created_by', 'updated_by', 'discount', 'discount_type', 'bargain_expr', 'bargain_note', 'bargain_closed'];
 }

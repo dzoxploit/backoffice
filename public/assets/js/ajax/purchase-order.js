@@ -27,88 +27,184 @@ $("#savePurchaseOrder").click(function () {
     });
 });
 
-//Search Button
+//=================================================
+/** Backup form ke temp table dlu **/
+//=================================================
 $("#search-product").click(function () {
-    var po_num, supplier, discount, type, note, date;
+    var po_id_romawi, po_id_year, discount, discount_type, note, po_date, payment_term, contact_person, request, delivery_date, delivery_point, ppn, po_maker, po_approver;
 
-    date = $("#po-date").val();
-    supplier = $("#supplier-option").val();
+    po_id_romawi = $('#inputPurchasePoIdCreateRomawi').val();
+    po_id_year = $('#inputPurchasePoIdCreateYear').val();
+    po_date = $("#po-date").val();
+    supplier = $("#purchaseNewSupplier").val();
     discount = $("#purchaseOrderDiscount").val();
-    type = $("#purchaseOrderDiscountType").val();
+    discount_type = $("#purchaseOrderDiscountType").val();
     note = $("#note").val();
-    po_num = $("#po-num").val();
-    date = $('#po-date').val();
-
-    console.log(discount);
+    po_date = $('#po-date').val();
+    payment_term = $('#purchaseNewPaymentTerm').val(),
+    contact_person = $('#purchaseNewContactPerson').val(),
+    request = $('#purchaseNewRequest').val(),
+    delivery_date = $('#purchaseNewDeliveryDate').val(),
+    delivery_point = $('#purchaseNewDeliveryPoint').val();
+    po_maker = $('#purchase_po_yang_membuat').val(),
+    po_approver = $('#purchase_po_yang_menyetujui').val();
+    
+    if ($('#purchaseCreatePPN').prop('checked')) {
+        ppn = true;
+    }else{
+        ppn = false;
+    }
 
     $.ajax({
         url: '/purchaseorders/temp/store',
         method: "post",
         data: {
-            po_num: po_num,
+            po_id_romawi: po_id_romawi,
+            po_id_year: po_id_year,
+            po_date: po_date,
             supplier: supplier,
             discount: discount,
-            type: type,
-            date: date,
+            type: discount_type,
             note: note,
+            payment_term : payment_term,
+            contact_person : contact_person,
+            request : request,
+            delivery_date : delivery_date,
+            delivery_point : delivery_point,
+            ppn : ppn,
+            po_maker : po_maker,
+            po_approver : po_approver
         },
-        success: function (response) {
-            window.location = "/purchaseorders/product";
-        },
+        success: function (response) {},
     });
 });
 
-//Update Button
+//=================================================
+/** Search product po untuk bikin po **/
+//=================================================
+var poProductCreate;
+$("#inputPoSearchProductCreate").on("keyup", function () {
+    clearTimeout(poProductCreate);
+    poProductCreate = setTimeout(function () {
+        searchPo();
+    }, 500);
+});
+$("#inputPoSearchProductCreate").on("keydown", function () {
+    clearTimeout(poProductCreate);
+});
+
+//check Po id tersedia atau tidak
+function searchPo() {
+    $('#po-search-loading-bar').removeClass('d-none');
+    var keywords = $("#inputPoSearchProductCreate").val();
+    $.ajax({
+        url: "/purchaseorders/search/product",
+        method: "post",
+        data: {
+            keywords: keywords,
+        },
+        success: function (response) {
+            $("#poSearchProductResultTableBody").html(response);
+            $(".poProductItemChoose").click(function () {
+                var prod_id = $(this).attr("prod-id");
+                chooseProduct(prod_id);
+            });
+        },complete : function(){
+            $('#po-search-loading-bar').addClass('d-none');
+        }
+    });
+}
+
+//=================================================
+/** Choose Product Save **/
+//=================================================
+function chooseProduct(prod_id) {
+    $.ajax({
+        url: "/purchaseorders/temp/detail/" + prod_id,
+        method: "post",
+        success: function (response) {
+            if (response.status == 'ok') {
+                location.reload();                
+            }
+        },
+    });
+}
+
+//=================================================
+/** Update Product **/
+//=================================================
 $(".poDetailUpdate").click(function () {
-
     var product_id = $(this).attr('dm-data');
-
     $.ajax({
         url: '/purchaseorders/detail/' + product_id + '/ajax',
         method: "get",
         success: function (response) {
-            console.log(response);
-            $('#poEditProductId').val(response.tempDetailPo.product_id);
+            $('#editDetailProductId').val(response.tempDetailPo.product_id);
+            $('#editDetailUnit').val(response.tempDetailPo.unit);
+            $('#editDetailUnitPrice').val(response.tempDetailPo.unit_price)
             $('#editDetailDiscount').val(response.tempDetailPo.discount);
             $('#editDetailQty').val(response.tempDetailPo.qty);
         },
     });
 });
 
-// Total Info
-function purchaseOrderCalcSubTotal() {
-    $.ajax({
-        url: '/purchaseorders/detail/calculation/ajax',
-        method: "get",
-        success: function (response) {
-            $('#purchaseOrderSubTotalHarga').html(response.subTotalPrice);
-        },
-    });
-}
-purchaseOrderCalcSubTotal();
+//=================================================
+/** Kalkulasi ketika kolom discount di ketik **/
+//=================================================
+var purchaseDiscountTypingTimer;
+$("#purchaseOrderDiscount").on('keyup', function () {
+    clearTimeout(purchaseDiscountTypingTimer)
+    purchaseDiscountTypingTimer = setTimeout(purchasePoCalcTotal, 200)
+});
+$("purchaseOrderDiscount").on('keydown', function () {
+    clearTimeout(purchaseDiscountTypingTimer);
+})
 
- /** Check setelah typing berhenti beberapa saat **/
- var purchaseDiscountTypingTimer;
- $("#purchaseOrderDiscount").on('keyup', function () {
-     clearTimeout(purchaseDiscountTypingTimer)
-     purchaseDiscountTypingTimer = setTimeout(purchaseOrderCalcTotal, 500)
- });
- $("purchaseOrderDiscount").on('keydown', function () {
-     clearTimeout(purchaseDiscountTypingTimer);
- })
- function purchaseOrderCalcTotal() {
-    var discount = $('#purchaseOrderDiscount').val(); 
+
+//=================================================
+/** Kalkulasi ketika discount type berubah **/
+//=================================================
+$("#purchaseOrderDiscountType").on("change", function () {
+    purchasePoCalcTotal();
+    if (!$(this).val()) {
+        $('#purchaseOrderDiscount').val('')
+    }
+});
+
+//=================================================
+/** Kalkulasi total info **/
+//=================================================
+function purchasePoCalcTotal(ppn = false, discount, discount_type) {
+    var discount = $('#purchaseOrderDiscount').val();
     var discount_type = $('#purchaseOrderDiscountType').val();
+    if ($('#purchaseCreatePPN').prop('checked') == true) {
+        ppn = true
+    }
     $.ajax({
-        url: '/purchaseorders/detail/calculation/discount/ajax',
+        url: "/purchaseorders/po/calculation/total/ajax",
         method: "get",
         data: {
-            discount : discount,
-            discount_type : discount_type
+            ppn: ppn,
+            discount: discount,
+            discount_type: discount_type
         },
         success: function (response) {
-            $('#purchaseOrderTotalHarga').html(response.totalPrice);
+            $("#purchaseOrderSubTotalHarga").html(response.subTotalPrice);
+            $("#purchaseOrderPpn").html(response.ppn);
+            $("#purchaseOrderTotalHarga").html(response.poTotalPrice);
         },
     });
 }
-purchaseOrderCalcTotal();
+
+purchasePoCalcTotal();
+
+//=================================================
+/** PPN Switch **/
+//=================================================
+$('#purchaseCreatePPN').click(function () {
+    if ($(this).prop('checked') == true) {
+        purchasePoCalcTotal(true);
+    } else {
+        purchasePoCalcTotal();
+    }
+})

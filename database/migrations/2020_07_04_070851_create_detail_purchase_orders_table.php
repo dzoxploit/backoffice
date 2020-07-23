@@ -19,7 +19,7 @@ class CreateDetailPurchaseOrdersTable extends Migration
             $table->integer('qty');
             $table->integer('price');
             $table->integer('discount');
-            $table->string('po_id');
+            $table->integer('po_id');
         });
     }
 

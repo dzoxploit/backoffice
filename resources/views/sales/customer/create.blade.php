@@ -53,17 +53,17 @@
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label class="form-control-label">Nama Pelanggan</label>
-                                    <input type="text" name="customer-name" class="form-control" placeholder="Enter username"
-                                        required />
+                                    <input type="text" name="customer-name" class="form-control"
+                                        placeholder="Enter username" required />
                                     <small class="help-block with-errors text-danger"></small>
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label class="form-control-label">Alamat</label>
-                                    <input type="text" name="customer-address" class="form-control" placeholder="Enter Address"
-                                        required />
+                                    <label class="form-control-label">Alamat Kantor</label>
+                                    <input type="text" name="customer-address" class="form-control"
+                                        placeholder="Enter Address" required />
                                     <small class="help-block with-errors text-danger"></small>
                                 </div>
 
@@ -87,6 +87,15 @@
                                         placeholder="Enter Departemen" required />
                                     <small class="help-block with-errors text-danger"></small>
                                 </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                            <div class="form-group col-md-6">
+                                <label class="form-control-label">Alamat Gudang</label>
+                                <input type="text" name="warehouse-address" class="form-control"
+                                    placeholder="Masukan Alamat Gudang" required />
+                                <small class="help-block with-errors text-danger"></small>
+                            </div>
                             </div>
                             <button type="submit" class="btn btn-md btn-primary">Save</button>
                         </form>

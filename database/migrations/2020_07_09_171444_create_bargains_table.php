@@ -14,12 +14,13 @@ class CreateBargainsTable extends Migration
     public function up()
     {
         Schema::create('bargains', function (Blueprint $table) {
-            $table->string('bargain_id')->primary();
+            $table->bigIncrements('bargain_id');
+            $table->string('bargain_id_format');
             $table->integer('customer_id');
             $table->integer('created_by');
             $table->integer('updated_by');
-            $table->integer('discount');
-            $table->string('discount_type');
+            $table->integer('discount')->nullable();
+            $table->string('discount_type', 1)->nullable();
             $table->date('bargain_expr');
             $table->string('bargain_note');
             $table->dateTime('bargain_closed')->nullable();

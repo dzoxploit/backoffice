@@ -17,8 +17,7 @@ class CreateTempDetailPurchaseOrderCustomersTable extends Migration
             $table->integer('product_id');
             $table->string('product_name');
             $table->integer('qty');
-            $table->integer('price');
-            $table->integer('discount');
+            $table->integer('unit_price');
             $table->integer('temp_po_id');
         });
     }

@@ -14,9 +14,10 @@ class CreatePurchaseOrdersTable extends Migration
     public function up()
     {
         Schema::create('purchase_orders', function (Blueprint $table) {
-            $table->string('po_id')->primary();
+            $table->bigIncrements('po_id');
+            $table->string('po_id_format');
             $table->integer('sup_id');
-            $table->integer('discount');
+            $table->integer('discount')->nullable();
             $table->string('type', 5);
             $table->date('date');
             $table->string('note');

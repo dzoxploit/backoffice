@@ -8,6 +8,6 @@ class TempBargain extends Model
 {
     protected $table = 'temp_bargains';
     protected $primaryKey = 'temp_bargain_id';
-    protected $fillable = ['bargain_id', 'customer_id', 'discount', 'discount_type',  'bargain_expr', 'bargain_note', 'temp_expr'];
+    protected $fillable = ['temp_bargain_id', 'bargain_id', 'bargain_id_format', 'customer_id', 'created_by', 'updated_by', 'discount', 'discount_type', 'action', 'status' ,'bargain_expr', 'bargain_note', 'temp_expr'];
     public $timestamps = false;
 }

@@ -18,7 +18,7 @@ class CreateDetailDeliveryOrdersTable extends Migration
             $table->string('product_name');
             $table->integer('qty');
             $table->string('note')->nullable();
-            $table->string('do_id');
+            $table->integer('do_id');
         });
     }
 

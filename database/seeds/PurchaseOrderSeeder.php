@@ -13,7 +13,7 @@ class PurchaseOrderSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('purchase_orders')->insert([
+        DB::table('purchase_order_customers')->insert([
             'po_id' => '1',
             'sup_id' => 1,
             'discount' => 23,

@@ -46,11 +46,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($product as $pd)
+                                @foreach($product as $pd) 
                                     <tr>
                                         <td>{{ $pd->prod_id }}</td>
                                         <td>{{ $pd->prod_name }}</td>
-                                        <td>{{ $pd->prod_price }}</td>
+                                        <td>{{ "Rp " . number_format($pd->prod_price,2,',','.')  }}</td>
                                         <td class="text-center">
                                             <div class="flex align-items-center">
                                                 <a type="button" class="btn btn-primary" data-placement="top" data-toggle="tooltip" title=""

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\InsertSupplier;
+use App\Http\Requests\UpdateSupplier;
 use App\Supplier;
 use Exception;
 use Illuminate\Http\Request;
@@ -11,42 +13,51 @@ class SupplierController extends Controller
 {
     public function index()
     {
-        $suppliers = Supplier::all();
+        $suppliers = Supplier::paginate(10);
 
         return view('suppliers.supplier', [
-            'pageTitle' => 'Suppliers Management',
+            'pageTitle' => 'Manajemen Vendor',
             'suppliers' => $suppliers
         ]);
     }
     public function create()
     {
         return view('suppliers.create', [
-            'pageTitle' => 'Suppliers Management'
+            'pageTitle' => 'Manajemen Vendor'
         ]);
     }
 
-    public function store()
+    public function store(InsertSupplier $request)
     {
-
         $supplierData = [
-            'sup_name' => request('sup_name'),
-            'sup_desc' => request('sup_desc'),
-            'sup_address' => request('sup_address'),
-            'sup_address2' => request('sup_address2'),
-            'sup_cp' => request('sup_cp'),
-            'sup_cp2'=> request('sup_cp2'),
-            'sup_rek_giro' => request('sup_rek_giro')
+            'sup_name' => $request->input('sup_name'), 
+            'sup_email' => $request->input('sup_email'), 
+            'sup_address' => $request->input('sup_address'),
+            'sup_address2' => $request->input('sup_address2'),
+            'sup_desc' => $request->input('sup_desc'),
+            'cp_name' => $request->input('cp_name'), 
+            'cp_telp' => $request->input('cp_telp'),
+            'cp_email' => $request->input('cp_email'),
+            'sup_bank_rekening' => $request->input('sup_bank_rekening'), 
+            'sup_bank_name' => $request->input('sup_bank_name'), 
+            'sup_bank_cabang' => $request->input('sup_bank_cabang'), 
+            'sup_bank_an' => $request->input('sup_bank_an'),
+            'sup_npwp' => $request->input('sup_npwp')
         ];
 
-        try {
-            Supplier::create($supplierData);
+        Supplier::create($supplierData);
 
-            return redirect('suppliers')->with('Success', 'Supplier baru berhasil di tambahkan');
-        } catch (\Exception $th) {
-            //throw $th;
+        return redirect('suppliers')->with('Success', 'Supplier baru berhasil di tambahkan');
+    }
 
-            return redirect()->back()->with('Error', 'Tidak dapat terhubung ke database');
-        }
+    public function detail($sup_id)
+    {
+        $supplier = Supplier::where('sup_id', $sup_id)->first();
+
+        return view('suppliers.detail', [
+            'pageTitle' => 'Data Vendor',
+            'supplier' => $supplier
+        ]);
     }
 
     public function show($sup_id)
@@ -55,32 +66,36 @@ class SupplierController extends Controller
         $supplier = Supplier::where('sup_id', $sup_id)->first();
 
         return view('suppliers.edit',[
-            'pageTitle' => 'Edit Supplier',
+            'pageTitle' => 'Ubah Supplier',
             'supplier' => $supplier
         ]);
 
     }
 
-    public function update($sup_id)
+    public function update(UpdateSupplier $request , $sup_id)
     {
         $supplierData = [
-            'sup_name' => request('sup_name'),
-            'sup_desc' => request('sup_desc'),
-            'sup_address' => request('sup_address'),
-            'sup_address2' => request('sup_address2'),
-            'sup_cp' => request('sup_cp'),
-            'sup_cp2'=> request('sup_cp2'),
-            'sup_rek_giro' => request('sup_rek_giro')
+            'sup_name' => $request->input('sup_name'), 
+            'sup_email' => $request->input('sup_email'), 
+            'sup_address' => $request->input('sup_address'),
+            'sup_address2' => $request->input('sup_address2'),
+            'sup_desc' => $request->input('sup_desc'),
+            'cp_name' => $request->input('cp_name'), 
+            'cp_telp' => $request->input('cp_telp'),
+            'cp_email' => $request->input('cp_email'),
+            'sup_bank_rekening' => $request->input('sup_bank_rekening'), 
+            'sup_bank_name' => $request->input('sup_bank_name'), 
+            'sup_bank_cabang' => $request->input('sup_bank_cabang'), 
+            'sup_bank_an' => $request->input('sup_bank_an'),
+            'sup_npwp' => $request->input('sup_npwp')
         ];
 
         try {
             Supplier::where('sup_id', $sup_id)->update($supplierData);
-
             return redirect('/suppliers')->with('Success', 'Supplier berhasil di edit!!');
         } catch (Exception $th) {
             throw $th;
-            return redirect()->back()->with('Error', 'Gagal, Tidak dapat terhubung ke database');
-            
+            return redirect()->back()->with('Error', 'Gagal');
         }
         
     }

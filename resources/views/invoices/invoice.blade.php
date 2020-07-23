@@ -55,14 +55,12 @@
                                     <tr>
                                         <td>{{ $inv->invoice_id }}</td>
                                         <td>{{ $inv->no_invoice }}</td>
-                                        <td>{{ $inv->invoice_date }}</td>
-                                        <td>{{ $inv->po_id }}</td>
-                                        <td>{{ $inv->due_date }}</td>
+                                        <td>{{ date('Y/m/d', strtotime($inv->created_at))}}</td>
+                                        <td>{{ str_pad($inv->po_id, 4, '0', STR_PAD_LEFT).$inv->po_id_format }}</td>
+                                        <td>{{ date('Y/m/d', strtotime($inv->due_date)) }}</td>
                                         <td class="text-center">
                                             <div class="flex align-items-center">
-                                                {{-- <a type="button" class="btn btn-warning" data-placement="top" data-toggle="tooltip" title=""
-                                                data-original-title="Edit"
-                                                href="{{ 'suppliers/'.$inv->sup_id.'/edit' }}">Update</a> --}}
+                                                <a href="{{ url('/invoices/'.$inv->invoice_id) }}"><button type="button" class="btn btn-info">Detail</button></a>
 
                                                 <form action="{{ url('invoices/'.$inv->invoice_id) }}"
                                                     method="post" class="d-inline-block">

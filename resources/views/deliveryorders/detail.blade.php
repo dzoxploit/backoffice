@@ -20,53 +20,42 @@
 
         <div class="row">
             <div class="col-8">
-                <div class="form-group row">
-                    <label for="inputPoId" class="col-2 col-form-label">Delivery Order ID :</label>
-                    <div class="col">
-                        {{ $do->do_id ?? '' }}
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="inputPoId" class="col-2 col-form-label">Delivery Order Num. :</label>
-                    <div class="col">
-                        {{ $do->do_num ?? '' }}
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="inputPoId" class="col-2 col-form-label">PO ID :</label>
-                    <div class="col">
-                        {{ $do->po_id ?? '' }}
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="inputNoInvoice" class="col-2 col-form-label">Sender</label>
-                    <div class="col">
-                        {{ $do->do_sender ?? '' }}
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="inputNoInvoice" class="col-2 col-form-label">Receiver</label>
-                    <div class="col">
-                        {{ $do->do_receiver ?? '' }}
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="inputNoInvoice" class="col-2 col-form-label">Deliveryman</label>
-                    <div class="col">
-                        {{ $do->do_deliveryman ?? '' }}
-                    </div>
-                </div>
+                <table>
+                    <tr>
+                        <td class="pr-4">Delivery Order ID </td>
+                        <td> : {{ $do->do_id ?? '' }}</td>
+                    </tr>
+                    <tr>
+                        <td>No. Delivery Order (external) </td>
+                        <td> : {{ $do->do_num ?? '' }}</td>
+                    </tr>
+                    <tr>
+                        <td>PO ID</td>
+                        <td> : {{ $do->po_id ?? '' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Sender</td>
+                        <td> : {{ $do->do_sender ?? '' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Receiver</td>
+                        <td> : {{ $do->do_receiver ?? '' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Deliveryman</td>
+                        <td> : {{ $do->do_deliveryman ?? '' }}</td>
+                    </tr>
+                </table>
             </div>
-            <div class="col-4">
-                <div class="form-group row">
-                    <label for="inputDueDate" class="col-2 col-form-label">Date :</label>
-                    <div class="col">
-                        {{ !empty($do) ? date('Y-m-d', strtotime($do->do_date)) : '' }}
-                    </div>
-                </div>
+            <div class="col-4 clearfix">
+                <table class="float-right">
+                    <tr class="text-right">
+                        <td class="pr-4">Tgl. Do :</td>
+                        <td>{{ !empty($do) ? date('Y-m-d', strtotime($do->do_date)) : '' }}</td>
+                    </tr>
+                </table>
             </div>
-        </div>
-
+            </div>
         <div class="row">
             <div class="col">
                 <label for="inputNote">Note :</label>

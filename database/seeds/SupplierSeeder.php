@@ -14,6 +14,7 @@ class SupplierSeeder extends Seeder
     {
         DB::table('suppliers')->insert([
             'sup_name' => 'CV. Kukuk Jaya',
+            'sup_email' => 'ashiap@gmail.com',
             'sup_desc' => 'Jual Ayam Negeri dan ayam kampung masih segar mantap',
             'sup_address' => 'Jl. Hj.Muad No.1G',
             'sup_address2' => '',

@@ -7,7 +7,7 @@
             <div class="iq-card">
                 <div class="iq-card-header d-flex justify-content-between">
                     <div class="iq-header-title">
-                        <h4 class="card-title">Add New Supplier</h4>
+                        <h4 class="card-title">Tambah Vendor Baru</h4>
                     </div>
                 </div>
                 <div class="iq-card-body">
@@ -37,83 +37,124 @@
             <div class="iq-card">
                 <div class="iq-card-header d-flex justify-content-between">
                     <div class="iq-header-title">
-                        <h4 class="card-title">New Supplier Information</h4>
+                        <h4 class="card-title">Data Vendor Baru</h4>
                     </div>
                 </div>
                 <div class="iq-card-body">
                     @if($message = Session::get('Error'))
-                        <div class="alert alert-danger alert-block">
-                            <button type="button" class="close" data-dismiss="alert">×</button>
-                            <strong>{{ $message }}</strong>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>{{ $message }}</strong> 
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif 
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Pastikan Untuk Mengisi data dengan Benar!!</strong> 
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
                     @endif
+                    <h5 class="mb-3"><b>Data Vendor</b></h5>
                     <div class="new-user-info">
                         <form action="{{ url()->current() }}" method="POST">
                             @csrf
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label class="form-control-label">Supplier Name</label>
-                                    <input type="text" name="sup_name" class="form-control" placeholder="Masukan Nama Supplier"
+                                    <label class="form-control-label">Nama Vendor</label>
+                                    <input type="text" name="sup_name" class="form-control" placeholder="Masukan nama vendor"
                                         required />
+                                    <small class="help-block with-errors text-danger"></small>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-control-label">Email Vendor</label>
+                                    <input type="email" name="sup_email" class="form-control" placeholder="Masukan Email Vendor"
+                                        required />
+                                    <small class="help-block with-errors text-danger"></small>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-control-label">Alamat</label>
+                                    <input type="text" name="sup_address" class="form-control" placeholder="Masukan Alamat Vendor"
+                                        required />
+                                    <small class="help-block with-errors text-danger"></small>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-control-label">Alamat 2</label>
+                                    <input type="text" name="sup_address2" class="form-control"
+                                        placeholder="Masukan Alamat Alternatif Vendor" />
+                                    <small class="help-block">*Kosongkan jika tidak ada</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Deskripsi</label>
+                                <textarea name="sup_desc" id="" cols="30" rows="2" class="form-control" placeholder="Masukan Deskripsi Vendor"></textarea>
+                                <small class="help-block">*Kosongkan jika tidak ada</small>
+                            </div>
+
+                            <hr>
+                            <h5 class="mb-3"><b>Kontak</b></h5>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="form-control-label">Nama</label>
+                                    <input type="text" name="cp_name" class="form-control"
+                                        placeholder="Masukan Nama" required />
+                                    <small class="help-block with-errors text-danger"></small>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-control-label">No. Telp</label>
+                                    <input type="text" name="cp_telp" class="form-control"
+                                        placeholder="Masukan No Telp" required />
                                     <small class="help-block with-errors text-danger"></small>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-control-label">Email</label>
-                                    <input type="email" name="sup_email" class="form-control" placeholder="Masukan Email Supplier"
-                                        required />
+                                    <input type="email" name="cp_email" class="form-control"
+                                        placeholder="Masukan Email" required />
                                     <small class="help-block with-errors text-danger"></small>
                                 </div>
                             </div>
                             <hr>
+                            <h5 class="mb-3"><b>Akun Bank</b></h5>
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label class="form-control-label">Alamat</label>
-                                    <input type="text" name="sup_address" class="form-control" placeholder="Masukan Alamat"
-                                        required />
-                                    <small class="help-block with-errors text-danger"></small>
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <label class="form-control-label">Alamat 2</label>
-                                    <input type="text" name="sup_address2" class="form-control"
-                                        placeholder="Masukan Alamat" required />
-                                    <small class="help-block with-errors text-danger"></small>
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <label class="form-control-label">Phone Number</label>
-                                    <input type="text" name="sup_cp" class="form-control"
-                                        placeholder="Masukan Nomor Telepon" required />
-                                    <small class="help-block with-errors text-danger"></small>
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <label class="form-control-label">Phone Number 2</label>
-                                    <input type="text" name="sup_cp2" class="form-control"
-                                        placeholder="Masukan Nomor Telepon" required />
-                                    <small class="help-block with-errors text-danger"></small>
-                                </div>
-
-
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-control-label">Description</label>
-                                <textarea name="sup_desc" id="" cols="30" rows="2" required class="form-control" placeholder="Masukan Deskripsi"></textarea>
-                                <small class="help-block with-errors text-danger"></small>
-                            </div>
-
-                            <hr>
-                            <h5 class="mb-3">Account</h5>
-                            <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label for="no-rek-giro" name="password" class="form-control-label">No. Rekening Giro</label>
-                                    <input type="text" name="sup_rek_giro" class="form-control"
+                                    <label for="no-rek-giro" name="no-rek-giro" class="form-control-label">No. Rekening</label>
+                                    <input type="text" name="sup_bank_rekening" class="form-control"
                                         placeholder="Masukan Nomor Rekening" id="no-rek-giro" required />
                                     <small class="help-block with-errors text-danger"></small>
                                 </div>
+                                <div class="form-group col-md-6">
+                                    <label for="no-rek-giro" name="password" class="form-control-label">Nama Bank</label>
+                                    <input type="text" name="sup_bank_name" class="form-control"
+                                        placeholder="Masukan Nama Bank" id="no-rek-giro" required />
+                                    <small class="help-block with-errors text-danger"></small>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="no-rek-giro" name="password" class="form-control-label">Cabang Bank</label>
+                                    <input type="text" name="sup_bank_cabang" class="form-control"
+                                        placeholder="Masukan Cabang Bank" id="no-rek-giro" required />
+                                    <small class="help-block with-errors text-danger"></small>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="no-rek-giro" name="password" class="form-control-label">Atas Nama</label>
+                                    <input type="text" name="sup_bank_an" class="form-control"
+                                        placeholder="Masukan Atas Nama" id="no-rek-giro" required />
+                                    <small class="help-block with-errors text-danger"></small>
+                                </div>
                             </div>
-                            <button type="submit" class="btn btn-md btn-primary">Save</button>
+                            <hr>
+                            <h5 class="mb-3"><b>Data Lainnya</b></h5>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="no-rek-giro" name="password" class="form-control-label">NPWP</label>
+                                    <input type="text" name="sup_npwp" class="form-control"
+                                        placeholder="Masukan NPWP" id="no-rek-giro" required />
+                                    <small class="help-block with-errors text-danger"></small>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-md btn-primary">Simpan</button>
                         </form>
                     </div>
                 </div>

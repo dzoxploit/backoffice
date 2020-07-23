@@ -16,11 +16,13 @@ class CreateInvoicesTable extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->bigIncrements('invoice_id');
             $table->string('no_invoice');
-            $table->date('invoice_date');
-            $table->string('po_id');
-            $table->dateTime('confirm_date')->nullable();
-            $table->dateTime('due_date');
+            $table->integer('po_id');
+            $table->string('po_id_format');
+            $table->date('due_date');
             $table->string('note');
+            $table->integer('ppn');
+            $table->dateTime('paid_at')->nullable();
+            $table->integer('paid_price')->nullable();
             $table->integer('id_user');
             $table->timestamps();
             $table->softDeletes();

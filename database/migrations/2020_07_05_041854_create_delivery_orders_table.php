@@ -14,10 +14,10 @@ class CreateDeliveryOrdersTable extends Migration
     public function up()
     {
         Schema::create('delivery_orders', function (Blueprint $table) {
-            $table->string('do_id')->primary();
+            $table->bigIncrements('do_id');
             $table->string('do_num');
             $table->string('po_id');
-            $table->dateTime('do_date');
+            $table->date('do_date');
             $table->string('do_sender');
             $table->string('do_receiver');
             $table->string('do_deliveryman');

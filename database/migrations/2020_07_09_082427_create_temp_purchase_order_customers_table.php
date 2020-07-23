@@ -15,13 +15,13 @@ class CreateTempPurchaseOrderCustomersTable extends Migration
     {
         Schema::create('temp_purchase_order_customers', function (Blueprint $table) {
             $table->bigIncrements('temp_po_id');
-            $table->string('po_id');
-            $table->string('po_num');
-            $table->string('id_penawaran');
-            $table->integer('customer_id');
-            $table->string('po_note');
-            $table->integer('po_discount');
-            $table->string('po_discount_type');
+            $table->string('po_id')->nullable();
+            $table->string('po_num')->nullable();
+            $table->string('bargain_id')->nullable();
+            $table->integer('customer_id')->nullable();
+            $table->string('po_note')->nullable();
+            $table->integer('po_discount')->nullable();
+            $table->string('po_discount_type', 1)->nullable();
             $table->integer('id_user');
             $table->dateTime('expr');
         });

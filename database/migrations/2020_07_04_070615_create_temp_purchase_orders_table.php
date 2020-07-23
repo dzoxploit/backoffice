@@ -16,11 +16,12 @@ class CreateTempPurchaseOrdersTable extends Migration
         Schema::create('temp_purchase_orders', function (Blueprint $table) {
             $table->bigIncrements('temp_po_id');
             $table->string('po_id')->nullable();
-            $table->integer('sup_id');
-            $table->integer('discount');
-            $table->string('type');
-            $table->date('date');
-            $table->string('note');
+            $table->string('po_id_format')->nullable();
+            $table->integer('sup_id')->nullable();
+            $table->integer('discount')->nullable();
+            $table->string('type', 1)->nullable();
+            $table->date('date')->nullable();
+            $table->string('note')->nullable();
             $table->integer('id_user');
             $table->dateTime('expr');
         });

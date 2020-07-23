@@ -10,5 +10,4 @@ class BargainDetail extends Model
     protected $primaryKey = null;
     public $incrementing = false;
     protected $fillable = ['product_id', 'product_name', 'qty', 'unit_price', 'bargain_price', 'bargain_id'];
-    public $timestamps = false;
 }

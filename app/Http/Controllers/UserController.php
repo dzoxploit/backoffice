@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateUserPassword;
 use App\Role;
 use App\User;
+use App\UserPassword;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -12,7 +14,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::join('roles', 'users.role_id', '=', 'roles.role_id')->select('id_user','username', 'fullname', 'contact', 'role_name')->get();
+        $users = User::join('roles', 'users.role_id', '=', 'roles.role_id')->select('id_user','username', 'fullname', 'contact', 'role_name')->paginate(10);
 
         return view('users.user', [
             'pageTitle' => 'Users Management',
@@ -77,16 +79,10 @@ class UserController extends Controller
             'role_id' => $request->input('role'),
             'password' => Hash::make($request->input('password'))
         ];
-        try {
-            User::create($userData);
 
-            return redirect('/users')->with('Success', 'User berhasil di daftarkan!!');
-        } catch (Exception $th) {
-            throw $th;
-            die;
-            return redirect()->back()->with('Error', 'Tidak dapat terhubung ke database');
-            
-        }
+        User::create($userData);
+
+        return redirect('/users')->with('Success', 'User berhasil di daftarkan!!');       
     }
 
     public function show($id_user)
@@ -130,5 +126,31 @@ class UserController extends Controller
         } catch (Exception $th) {
             return redirect()->back()->with('Error', 'Hapus gagal, Tidak dapat terhubung ke database');
         }
+    }
+
+    public function showChangePassword()
+    {
+        return view('users.change-password', [
+            'pageTitle' => 'Change Password',
+        ]);
+    }
+
+    public function changePassword(UpdateUserPassword $request, $id_user)
+    {        
+        //samain password yang di db sama current_password yang di request
+        $user = User::select('id_user', 'password')->where('id_user', $id_user)->first();
+
+        if (Hash::check($request->current_password, $user->password)) {
+            //kalo sama di update ajah semua datanya
+            $userPasswordData = [
+                'password' => $request->password, 
+                'old_password' => $user->password, 
+            ];
+            UserPassword::where('id_user', $user->id_user)->update($userPasswordData);
+        }else {
+            //kalo nggk sama return error
+            
+        }
+        
     }
 }

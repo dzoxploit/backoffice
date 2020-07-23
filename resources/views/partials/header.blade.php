@@ -9,13 +9,7 @@
           </div>
        </div>
        <div class="navbar-breadcrumb">
-          <h5 class="mb-0">{{ $pageTitle ?? 'Untitled Page' }}</h5>
-          <nav aria-label="breadcrumb">
-             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Dashboard 2</li>
-             </ol>
-          </nav>
+          <h4 class="m-1">{{ $pageTitle ?? 'Untitled Page' }}</h4>
        </div>
        <nav class="navbar navbar-expand-lg navbar-light p-0">
              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

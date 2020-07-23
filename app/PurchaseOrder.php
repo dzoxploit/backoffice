@@ -11,7 +11,5 @@ class PurchaseOrder extends Model
 
     protected $table = 'purchase_orders';
     protected $primaryKey = 'po_id';
-    public $incrementing = false;
-    protected $keyType = 'string';
-    protected $fillable = ['po_id', 'sup_id', 'discount', 'type', 'date', 'note', 'id_user'];
+    protected $fillable = ['po_id', 'po_id_format', 'sup_id', 'discount', 'type', 'ppn', 'date', 'note', 'payment_term', 'contact_person', 'po_request', 'delivery_date', 'delivery_point', 'po_maker', 'po_approver' ,'id_user'];
 }

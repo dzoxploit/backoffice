@@ -15,7 +15,7 @@ class CreateTempDeliveryOrdersTable extends Migration
     {
         Schema::create('temp_delivery_orders', function (Blueprint $table) {
             $table->bigIncrements('temp_do_id');
-            $table->string('do_id')->unique();
+            $table->string('do_id');
             $table->string('do_num');
             $table->string('po_id');
             $table->dateTime('do_date');

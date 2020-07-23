@@ -54,7 +54,7 @@
                             <thead>
                                 <tr>
                                     <th>PO ID</th>
-                                    <th>No. PO</th>
+                                    <th>Customer PO</th>
                                     <th>Nomor Penawaran</th>
                                     <th>Customer</th>
                                     <th>Discount</th>
@@ -65,9 +65,9 @@
                             <tbody>
                                 @foreach($purchaseOrderCustomers as $poc)
                                     <tr>
-                                        <td>{{ $poc->po_id }}</td>
+                                        <td>{{ str_pad($poc->po_id, 4, '0', STR_PAD_LEFT).$poc->po_id_format }}</td>
                                         <td>{{ $poc->po_num }}</td>
-                                        <td>{{ $poc->id_penawaran }}</td>
+                                        <td>{{ $poc->bargain_id }}</td>
                                         <td>{{ $poc->fullname }}</td>
                                         <td>{{ $poc->po_discount.$poc->po_discount_type }}</td>
                                         <td>{{ $poc->created_at }}</td>

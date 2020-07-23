@@ -7,10 +7,10 @@
             <div class="iq-card">
                 <div class="iq-card-header d-flex justify-content-between">
                     <div class="iq-header-title">
-                        <h4 class="card-title">Purchase Order</h4>
+                        <h4 class="card-title">Daftar Surat Pesanan</h4>
                     </div>
                     <a href="{{ url('/purchaseorders/new') }}" class="btn btn-primary">
-                        Add New PO
+                        Tambah Surat Pesanan Baru
                     </a>
                 </div>
                 <div class="iq-card-body">
@@ -51,16 +51,16 @@
                             aria-describedby="user-list-page-info">
                             <thead>
                                 <tr>
-                                    <th>PO ID</th>
-                                    <th>Supplier</th>
-                                    <th>PO Date</th>
-                                    <th>Action</th>
+                                    <th>No. Surat Pesanan</th>
+                                    <th>Vendor</th>
+                                    <th>Tgl. Surat Pesanan</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($purchaseOrder as $po)
                                     <tr>
-                                        <td>{{ $po->po_id }}</td>
+                                        <td>{{ $po->po_id_format.str_pad($po->po_id, 4, '0', STR_PAD_LEFT)}}</td>
                                         <td>{{ $po->sup_name }}</td>
                                         <td>{{ $po->date }}</td>
                                         <td class="text-center">
@@ -85,29 +85,11 @@
                                         </td>
                                     </tr>
                                 @endforeach
-
                             </tbody>
                         </table>
                     </div>
                     <div class="row justify-content-between mt-3">
-                        <div id="user-list-page-info" class="col-md-6">
-                            <span>Showing 1 to 5 of 5 entries</span>
-                        </div>
-                        <div class="col-md-6">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-end mb-0">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                                    </li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">Next</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
+                        {{ $purchaseOrder->links('partials.pagination') }}
                     </div>
                 </div>
             </div>

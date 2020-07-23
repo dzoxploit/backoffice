@@ -9,6 +9,6 @@ class TempDetailPurchaseOrder extends Model
     protected $table = 'temp_detail_purchase_orders';
     protected $primaryKey = null;
     public $incrementing = false;
-    protected $fillable = ['product_id', 'product_name', 'qty', 'price', 'discount', 'temp_po_id'];
+    protected $fillable = ['product_id', 'product_name', 'qty', 'unit', 'unit_price', 'discount', 'temp_po_id'];
     public $timestamps = false;
 }

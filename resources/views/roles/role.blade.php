@@ -7,7 +7,7 @@
             <div class="iq-card">
                 <div class="iq-card-header d-flex justify-content-between">
                     <div class="iq-header-title">
-                        <h4 class="card-title">User List</h4>
+                        <h4 class="card-title">Role list</h4>
                     </div>
                     <button class="btn btn-primary" data-toggle="modal" data-target="#roleInsertModal">
                         Add New Roles

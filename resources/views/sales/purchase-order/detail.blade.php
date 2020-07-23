@@ -21,12 +21,16 @@
             <div class="col-8">
                 <table>
                     <tr>
-                        <td class="pr-4">Purchase Order ID (internal)</td>
-                        <td>: {{ $po->po_id ?? '' }}</td>
+                        <td class="pr-4">DM PO ID (internal)</td>
+                        <td>: {{ str_pad($po->po_id, 4, '0', STR_PAD_LEFT).$po->po_id_format ?? '' }}</td>
                     </tr>
                     <tr>
-                        <td>No. Purchase Order (External) </td>
+                        <td>No. Customer PO </td>
                         <td>: {{ $po->po_num ?? '' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Customer</td>
+                        <td>: {{ $po->customer_name ?? '' }}</td>
                     </tr>
                 </table>
             </div>
@@ -55,7 +59,6 @@
                     <th>Nama Product</th>
                     <th>Qty</th>
                     <th>Price</th>
-                    <th>Discount</th>
                 </tr>
             </thead>
             <tbody>
@@ -64,14 +67,19 @@
                         <td>{{ $dpo->product_id }}</td>
                         <td>{{ $dpo->product_name }}</td>
                         <td>{{ $dpo->qty }}</td>
-                        <td>{{ "Rp " . number_format($dpo->price,2,',','.') }}</td>
-                        <td>{{ $dpo->discount }}</td>
+                        <td>{{ "Rp " . number_format($dpo->unit_price,2,',','.') }}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
         <div class="clearfix py-3">
-            <div class="card float-right total-info">
+            <div class="card float-left total-info">
+                <div class="card-body">
+                    <h5 class="card-title"><b>Po Image</b></h5>
+                    <img src="{{ url('/storage/'.$po->po_attachment) }}" alt="" style="width: 300px">
+                </div>
+            </div>
+            <div class="card float-right total-info"> 
                 <div class="card-body">
                     <table>
                         <tr>
@@ -79,19 +87,19 @@
                             <td class="text-left pl-5" id="purchaseOrderSubTotalHarga">: {{ "Rp " . number_format($subTotal,2,',','.') }}</td>
                         </tr>
                         <tr>
-                            <td class="">Discount</td>
                             @php
                             if ($po->po_discount_type == '%') {
-                                $poDiscount = $po->po_discount.$po_discount_type;
+                                $poDiscount = $subTotal * $po->po_discount/100;
                             }elseif ($po->po_discount_type == '$') {
-                                $poDiscount = "Rp " . number_format($po->po_discount,2,',','.');
+                                $poDiscount = $subTotal - $po->discount;
                             }
                             @endphp
+                            <td class="">Discount</td>
                             <td class="text-left pl-5">
-                               : {{ $poDiscount }}
+                               : {{ "Rp " . number_format($poDiscount,2,',','.') }}
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="font-weight-bold h4">
                             @php
                             if ($po->po_discount_type == '%') {
                                 $discount = $subTotal * $po->po_discount/100;
@@ -101,8 +109,8 @@
                             }
                             @endphp
                             
-                            <td class="h5" style="padding: 1rem 0">Total </td>
-                            <td class="text-left pl-5 h5" style="padding: 1rem 0" id="purchaseOrderTotalHarga">: {{ "Rp " . number_format($totalHarga,2,',','.') }}</td>
+                            <td style="padding: 1rem 0">Total </td>
+                            <td class="text-left pl-5" style="padding: 1rem 0" id="purchaseOrderTotalHarga">: {{ "Rp " . number_format($totalHarga,2,',','.') }}</td>
                         </tr>
                     </table>
 

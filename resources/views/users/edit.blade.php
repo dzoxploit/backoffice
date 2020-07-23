@@ -7,7 +7,7 @@
             <div class="iq-card">
                 <div class="iq-card-header d-flex justify-content-between">
                     <div class="iq-header-title">
-                        <h4 class="card-title">Add New User</h4>
+                        <h4 class="card-title">Edit User</h4>
                     </div>
                 </div>
                 <div class="iq-card-body">
@@ -37,7 +37,10 @@
             <div class="iq-card">
                 <div class="iq-card-header d-flex justify-content-between">
                     <div class="iq-header-title">
-                        <h4 class="card-title">New User Information</h4>
+                        <h4 class="card-title">Change User Information</h4>
+                    </div>
+                    <div>
+                        {{-- <a href="{{ url('/users/'. $user->id_user .'/changepassword') }}"><button class="btn btn-primary">Change Password</button></a> --}}
                     </div>
                 </div>
                 <div class="iq-card-body">

@@ -10,16 +10,20 @@
                     <h1 class="mb-0">Sign in</h1>
                     <p>Enter your Username and Password to access admin panel.</p>
                     @if($message = Session::get('Success'))
-                        <div class="alert alert-success alert-block">
-                            <button type="button" class="close" data-dismiss="alert">×</button>
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
                             <strong>{{ $message }}</strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
                     @endif
 
                     @if($message = Session::get('Error'))
-                        <div class="alert alert-danger alert-block">
-                            <button type="button" class="close" data-dismiss="alert">×</button>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <strong>{{ $message }}</strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
                     @endif
                     <form class="mt-4" action="{{ url('login') }}" method="POST">

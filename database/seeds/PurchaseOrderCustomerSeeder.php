@@ -15,7 +15,7 @@ class PurchaseOrderCustomerSeeder extends Seeder
         DB::table('purchase_order_customers')->insert([
             'po_id' => '023984/02934',
             'po_num' => '23984791/2349',
-            'id_penawaran' => '543234sfdg',
+            'bargain_id' => '543234sfdg',
             'customer_id' => 1,
             'po_note' => 'Lorem Ipsum Dolor sit amet',
             'po_discount' => 200,

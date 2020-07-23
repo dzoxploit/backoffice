@@ -19,7 +19,7 @@ class CreateBargainDetailsTable extends Migration
             $table->integer('qty');
             $table->integer('unit_price');
             $table->integer('bargain_price');
-            $table->string('bargain_id');
+            $table->integer('bargain_id');
             $table->timestamps();
             $table->softDeletes();
         });

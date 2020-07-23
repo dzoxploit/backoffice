@@ -9,19 +9,17 @@
         <div>
             <form action="{{ url('invoices/new') }}" class="d-inline-block" method="POST">
                 @csrf
-                <button type="submit" data-toggle="tooltip" data-placement="top" id="save-purchase-order"
-                    class="btn btn-primary">Save</button>
+                {{-- <button type="submit" data-toggle="tooltip" data-placement="top" id="save-purchase-order"
+                    class="btn btn-primary">Save</button> --}}
         </div>
     </div>
     <div class="iq-card-body">
-
         <div class="row">
             <div class="col-8">
                 <div class="form-group row">
                     <label for="invoiceCreatePoId" class="col-2 col-form-label">PO ID :</label>
                     <div class="col">
-                        <input class="form-control" type="text" name="po-id" id="invoiceCreatePoId"
-                            value="{{ $tempPo->discount ?? '' }}">
+                        <input class="form-control" type="text" name="invoicePoId" id="inputCreateInvoicePoId" form="invoiceSaveForm">
                     </div>
                     <div class="col-3">
                         <div class="btn btn-primary" id="invoicePoIdCheck">Status</div>
@@ -30,8 +28,7 @@
                 <div class="form-group row">
                     <label for="inputNoInvoice" class="col-2 col-form-label">No. Invoice :</label>
                     <div class="col">
-                        <input class="form-control" type="text" name="no-invoice" id="inputNoInvoice"
-                            value="{{ $tempPo->po_id ?? '' }}">
+                        <input class="form-control" type="text" name="invoiceNum" form="invoiceSaveForm" id="inputCreateInvoiceNum">
                     </div>
                 </div>
             </div>
@@ -39,7 +36,7 @@
                 <div class="form-group row">
                     <label for="inputDueDate" class="col-2 col-form-label">Due Date :</label>
                     <div class="col">
-                        <input class="form-control" type="date" id="inputDueDate" name="due-date"
+                        <input class="form-control" type="date" id="inputCreateInvoiceDueDate" name="due-date" form="invoiceSaveForm"
                             value="{{ $tempPo->date ?? '' }}">
                     </div>
                 </div>
@@ -49,26 +46,32 @@
         <div class="row">
             <div class="col">
                 <label for="inputNote">Note :</label>
-                <textarea class="form-control" name="note" id="inputNote"
+                <textarea class="form-control" name="note" id="inputCreateInvoiceNote" form="invoiceSaveForm"
                     rows="2">{{ $tempPo->note ?? '' }}</textarea>
             </div>
         </div>
         </form>
         <div class="clearfix py-3">
+            <div class="card float-left total-info">
+                <div class="card-body">
+                    <h5 class="card-title"><b>Invoice Attachment</b></h5>
+                    <input type="file" name="invoiceAttachment" id="salesPoCustomerAttachment" accept="image/png, image/jpeg" form="invoiceSaveForm">
+                </div>
+            </div>
             <div class="card float-right total-info">
                 <div class="card-body">
                     <table>
                         <tr>
-                            <td class="text-right pl-5">Po Total : </td>
-                            <td class="text-right pl-5" id="invoiceTotal">Rp. 0,00</td>
+                            <td class="text-right pl-5">PO Total : </td>
+                            <td class="text-right pl-5" id="poTotal">Rp. 0,00</td>
                         </tr>
                         <tr>
                             <td class="text-right pl-5">
                             </td>
                             <td class="text-right pl-5">
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input ppnswitch" id="customSwitch1">
-                                    <label class="custom-control-label" for="customSwitch1">PPN 10%</label>
+                                    <input type="checkbox" class="custom-control-input" id="ppnswitch" name="ppn" form="invoiceSaveForm">
+                                    <label class="custom-control-label" for="ppnswitch">PPN 10%</label>
                                  </div>
                             </td>
                         </tr>
@@ -78,41 +81,24 @@
                         </tr>
                         <tr>
                             <td class="text-right pl-5">Total Harga : </td>
-                            <td class="text-right pl-5" id="invoiceppn">Rp. 0,00</td>
+                            <td class="text-right pl-5" id="invoiceTotalPrice">Rp. 0,00</td>
                         </tr>
                         <tr>
                             <td class="text-right pl-5">Harga Bayar :</td>
                             <td class="text-right pl-5">
-                                <input type="text" placeholder="" id="discount" class="dm-input">
+                                <input type="number" placeholder="" id="inputCreateInvoicePricePaid" name="paid_price" form="invoiceSaveForm" class="dm-input">
                             </td>
                         </tr>
                     </table>
-                    <button class="float-right my-2 mx-1 btn btn-primary" id="savePurchaseOrder">Save</button>
+                    <form action="{{ url('/invoices/new') }}" enctype="multipart/form-data"  method="post" id="invoiceSaveForm">
+                        @csrf
+                        <button type="submit" class="float-right my-2 mx-1 btn btn-primary" >Save</button>
+                    </form>
                     <a href="{{ url('/purchaseorders/temp/reset') }}"><button class="float-right my-2 btn btn-danger">Reset</button></a>
 
                 </div>
             </div>
         </div>
-        <!-- <div class="row justify-content-between mt-3">
-            <div id="user-list-page-info" class="col-md-6">
-                <span>Showing 1 to 5 of 5 entries</span>
-            </div>
-            <div class="col-md-6">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-end mb-0">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div> -->
     </div>
 </div>
 
@@ -263,5 +249,5 @@
 </div>
 @endsection
 @section('script')
-<script src="{{ asset('/assets/js/ajax/invoice.js') }}"></script>
+<script src="{{ asset('/assets/js/ajax/purchase/invoice.js') }}"></script>
 @endsection

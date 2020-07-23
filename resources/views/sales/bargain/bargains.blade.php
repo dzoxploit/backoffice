@@ -10,7 +10,8 @@
                         <h4 class="card-title">{{ $pageTitle }}</h4>
                     </div>
                     <div>
-                        <a type="button" href="{{ url('/sales/bargains/new') }}" class="btn btn-primary">
+                        <a type="button" href="{{ url('/sales/bargains/new') }}"
+                            class="btn btn-primary">
                             Tambah Penawaran Baru
                         </a>
                     </div>
@@ -64,10 +65,19 @@
                             <tbody>
                                 @foreach($bargains as $brg)
                                     <tr>
-                                        <td>{{ $brg->bargain_id }}</td>
+                                        <td>{{ str_pad($brg->bargain_id, 4, '0', STR_PAD_LEFT).$brg->bargain_id_format }}</td> 
                                         <td>{{ $brg->customer_fullname }}</td>
                                         <td>{{ $brg->created_by }}</td>
-                                        <td>{{ $brg->discount.$brg->discount_type }}</td>
+                                        @php
+                                            if ($brg->discount_type == '%') {
+                                                $bargainDiscount = $brg->discount.$brg->discount_type;
+                                            }elseif ($brg->discount_type == '$') {
+                                                $bargainDiscount = "Rp " . number_format($brg->discount,2,',','.');
+                                            }else {
+                                                $bargainDiscount = "Rp " . number_format(0,2,',','.');
+                                            }
+                                        @endphp
+                                        <td>{{ $bargainDiscount }}</td>
                                         <td>{{ $brg->bargain_expr }}</td>
                                         <td class="text-center">
                                             <div class="flex align-items-center">
@@ -134,7 +144,8 @@
                         <button class="btn btn-primary">Tambah Baru</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#salesPoOpenBargain" data-dismiss="modal">Buka penawaran ?</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#salesPoOpenBargain"
+                            data-dismiss="modal">Buka penawaran ?</button>
                     </div>
                 </div>
             </div>

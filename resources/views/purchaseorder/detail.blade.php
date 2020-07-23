@@ -7,6 +7,7 @@
             <h4 class="card-title">{{ $pageTitle }}</h4>
         </div>
         <div>
+            <a class="btn btn-primary" href="{{ url('/purchaseorders/print/pdf/'.$po->po_id) }}">Cetak</a>
             <form action="{{ url('/purchaseorders/'.$po->po_id ?? '') }}" class="d-inline-block"
                 method="POST">
                 @method('delete')
@@ -22,11 +23,27 @@
                 <table>
                     <tr>
                         <td class="pr-4">Purchase Order ID </td>
-                        <td>: {{ $po->po_id ?? '' }}</td>
+                        <td>: {{ $po->po_id_format.str_pad($po->po_id, 4, '0', STR_PAD_LEFT)}}</td>
                     </tr>
                     <tr>
-                        <td>Nama Supplier </td>
+                        <td>Supplier </td>
                         <td>: {{ $po->sup_name ?? '' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Alamat </td>
+                        <td>: {{ $po->sup_address ?? '' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Email </td>
+                        <td>: {{ $po->sup_email ?? '' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Syarat Pembayaran </td>
+                        @if ($po->payment_term == 0)
+                            <td>: Cash</td>
+                        @elseif ($po->payment_term != null)
+                            <td>: {{ $po->payment_term.'hr' ?? '' }}</td>
+                        @endif
                     </tr>
                 </table>
             </div>
@@ -35,6 +52,22 @@
                     <tr class="text-right">
                         <td class="pr-4">Tgl. PO :</td>
                         <td>{{ !empty($po) ? date('Y-m-d', strtotime($po->date)) : '' }}</td>
+                    </tr>
+                    <tr class="text-right">
+                        <td class="pr-4">Tanggal Penyerahan :</td>
+                        <td>{{ !empty($po) ? date('Y-m-d', strtotime($po->delivery_date)) : '' }}</td>
+                    </tr>
+                    <tr class="text-right">
+                        <td class="pr-4">Tempat Penyerahan :</td>
+                        <td>{{ $po->delivery_point ?? '' }}</td>
+                    </tr>
+                    <tr class="text-right">
+                        <td class="pr-4">Contact Person :</td>
+                        <td>{{ $po->contact_person ?? '' }}</td>
+                    </tr>
+                    <tr class="text-right">
+                        <td class="pr-4">Request :</td>
+                        <td>{{ $po->po_request ?? '' }}</td>
                     </tr>
                 </table>
             </div>
@@ -52,26 +85,51 @@
             aria-describedby="user-list-page-info">
             <thead>
                 <tr>
+                    <th>No</th>
                     <th>Product ID</th>
                     <th>Nama Product</th>
                     <th>Qty</th>
-                    <th>Price</th>
+                    <th>Unit</th>
+                    <th>Unit Price</th>
+                    <th>Ammount</th>
                     <th>Discount</th>
                 </tr>
             </thead>
             <tbody>
+                @php
+                    $detailPoNum = 1;    
+                @endphp
                 @foreach($detailPo as $dpo)
                     <tr>
+                        <td>{{ $detailPoNum++ }}</td>
                         <td>{{ $dpo->product_id }}</td>
                         <td>{{ $dpo->product_name }}</td>
                         <td>{{ $dpo->qty }}</td>
-                        <td>{{ "Rp " . number_format($dpo->price,2,',','.') }}</td>
-                        <td>{{ $dpo->discount }}</td>
+                        <td>{{ $dpo->unit ?? '-' }}</td>
+                        <td>{{ "Rp " . number_format($dpo->unit_price,2,',','.') }}</td>
+                        <td>{{ "Rp " . number_format($dpo->unit_price * $dpo->qty,2,',','.') }}</td>
+                        <td>{{ !empty($dpo->discount) ? $dpo->discount.'%' : 0 }}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
         <div class="clearfix py-3">
+            <div class="float-left total-info mt-3">
+                <div class="card">
+                    <div class="card-body">
+                        <table>
+                            <tr>
+                                <td>Pembuat</td>
+                                <td>: {{ !empty($authority) ? $authority[0]->authorization_name : '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td>Penyetuju</td>
+                                <td>: {{ !empty($authority) ? $authority[1]->authorization_name  : '-'}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
             <div class="card float-right total-info">
                 <div class="card-body">
                     <table>
@@ -80,16 +138,25 @@
                             <td class="text-left pl-5" id="purchaseOrderSubTotalHarga">: {{ "Rp " . number_format($subTotal,2,',','.') }}</td>
                         </tr>
                         <tr>
-                            <td class="">Discount</td>
+                            <td>Discount</td>
                             @php
                             if ($po->type == '%') {
                                 $poDiscount = $po->discount.$po->type;
                             }elseif ($po->type == '$') {
                                 $poDiscount = "Rp " . number_format($po->discount,2,',','.');
+                            }else {
+                                $poDiscount = '-';
                             }
                             @endphp
                             <td class="text-left pl-5">
                                 : {{ $poDiscount ?? '' }}
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <td>PPN</td>
+                            <td class="text-left pl-5">
+                                : {{ ($po->ppn != 0) ? $po->ppn.'%' : '-' }}
                             </td>
                         </tr>
                         <tr>
@@ -99,11 +166,13 @@
                                 $totalHarga = $subTotal - $discount;
                             }elseif ($po->type == '$') {
                                 $totalHarga = $subTotal - $po->discount;
+                            }else {
+                                $totalHarga = $subTotal;
                             }
                             @endphp
                             
-                            <td class="h5" style="padding: 1rem 0">Total </td>
-                            <td class="text-left pl-5 h5" style="padding: 1rem 0" id="purchaseOrderTotalHarga">: {{ "Rp " . number_format($totalHarga,2,',','.') }}</td>
+                            <td class="h5" style="padding: 1rem 0">Total</td>
+                            <td class="text-left pl-5 h5" style="padding: 1rem 0" id="purchaseOrderTotalHarga">: {{ "Rp " . number_format($totalHarga + $po->ppn,2,',','.') }}</td>
                         </tr>
                     </table>
 

@@ -22,63 +22,133 @@
         </div>
     </div>
     <div class="iq-card-body">
-
         <div class="row">
             <div class="col-8">
-                <div class="form-group row">
-                    <label for="inputPoId" class="col-2 col-form-label">Delivery Order ID :</label>
-                    <div class="col">
-                        <input class="form-control" type="text" name="do-id" id="inputDeliveryDoId"
-                            value="{{ $tempDo->do_id ?? '' }}">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="inputPoId" class="col-2 col-form-label">Delivery Order Num. :</label>
-                    <div class="col">
-                        <input class="form-control" type="text" name="do-num" id="inputDeliveryDoNum"
+                <table>
+                    <tr>
+                        <td>Delivery Order ID</td>
+                        <td class="pl-4">
+                            :
+                            <span>XXXX/SURATJALAN/DM/</span>
+                            <select name="inputSalesInvoiceInvoiceIdCreateRomawi" form="salesInvoiceFormSave"
+                                id="inputDoCreateRomawi" form="salesPurchaseOrderTempSave">
+                                <option value="-"
+                                    {{ $arrangeId['romawi'] ?? '' == '' ? 'selected' : '' }}>
+                                    -</option>
+                                <option value="I"
+                                    {{ $arrangeId['romawi'] ?? '' == 'I' ? 'selected' : '' }}>
+                                    I</option>
+                                <option value="II"
+                                    {{ $arrangeId['romawi'] ?? '' == 'II' ? 'selected' : '' }}>
+                                    II</option>
+                                <option value="III"
+                                    {{ $arrangeId['romawi'] ?? '' == 'III' ? 'selected' : '' }}>
+                                    III</option>
+                                <option value="IV"
+                                    {{ $arrangeId['romawi'] ?? '' == 'IV' ? 'selected' : '' }}>
+                                    IV</option>
+                                <option value="V"
+                                    {{ $arrangeId['romawi'] ?? '' == 'V' ? 'selected' : '' }}>
+                                    V</option>
+                                <option value="VI"
+                                    {{ $arrangeId['romawi'] ?? '' == 'VI' ? 'selected' : '' }}>
+                                    VI</option>
+                                <option value="VII"
+                                    {{ $arrangeId['romawi'] ?? '' == 'VII' ? 'selected' : '' }}>
+                                    VII</option>
+                                <option value="VIII"
+                                    {{ $arrangeId['romawi'] ?? '' == 'VIII' ? 'selected' : '' }}>
+                                    VIII</option>
+                                <option value="IX"
+                                    {{ $arrangeId['romawi'] ?? '' == 'IX' ? 'selected' : '' }}>
+                                    IX</option>
+                                <option value="X"
+                                    {{ $arrangeId['romawi'] ?? '' == 'X' ? 'selected' : '' }}>
+                                    X</option>
+                                <option value="XI"
+                                    {{ $arrangeId['romawi'] ?? '' == 'XI' ? 'selected' : '' }}>
+                                    XI</option>
+                                <option value="XII"
+                                    {{ $arrangeId['romawi'] ?? '' == 'XII' ? 'selected' : '' }}>
+                                    XII</option>
+                            </select> /
+                            <select name="inputSalesInvoiceInvoiceIdCreateYear" id="inputDoCreateYear"
+                                form="salesInvoiceFormSave">
+                                <option value="-"
+                                    {{ $arrangeId['year'] ?? '' == '' ? 'selected' : '' }}>
+                                    -</option>
+                                <option value="2020"
+                                    {{ $arrangeId['year'] ?? '' == '2020' ? 'selected' : '' }}>
+                                    2020</option>
+                                <option value="2021"
+                                    {{ $arrangeId['year'] ?? '' == '2021' ? 'selected' : '' }}>
+                                    2021</option>
+                                <option value="2022"
+                                    {{ $arrangeId['year'] ?? '' == '2022' ? 'selected' : '' }}>
+                                    2022</option>
+                                <option value="2023"
+                                    {{ $arrangeId['year'] ?? '' == '2023' ? 'selected' : '' }}>
+                                    2023</option>
+                                <option value="2024"
+                                    {{ $arrangeId['year'] ?? '' == '2024' ? 'selected' : '' }}>
+                                    2024</option>
+                                <option value="2025"
+                                    {{ $arrangeId['year'] ?? '' == '2025' ? 'selected' : '' }}>
+                                    2025</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <input type="text" hidden value="{{ app('request')->input('po_id') }}" id="inputDeliveryPoId">
+                    </tr>
+                    <tr>
+                        <td>Delivery Order Num</td>
+                        <td class="pl-4">
+                            : <input type="text" name="do-num" id="inputDeliveryDoNum"
                             value="{{ $tempDo->do_num ?? '' }}">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="inputPoId" class="col-2 col-form-label">PO ID :</label>
-                    <div class="col">
-                        <input class="form-control" type="text" name="po-id" id="inputDeliveryPoId"
-                            value="{{ $tempDo->po_id ?? '' }}">
-                    </div>
-                    <div class="col-3">
-                        <button type="button" class="btn btn-primary" id="deliveryPoIdCheck">Check</button>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="inputNoInvoice" class="col-2 col-form-label">Sender</label>
-                    <div class="col">
-                        <input class="form-control" type="text" name="do-sender" id="inputDeliveryDoSender"
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>PO ID</td>
+                        <td class="pl-4">
+                            :
+                            <span>{{ str_pad($po->po_id, 4, '0', STR_PAD_LEFT).$po->po_id_format }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Sender</td>
+                        <td class="pl-4"> :
+                            <input type="text" name="do-sender" id="inputDeliveryDoSender"
                             value="{{ $tempDo->do_sender ?? '' }}">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="inputNoInvoice" class="col-2 col-form-label">Receiver</label>
-                    <div class="col">
-                        <input class="form-control" type="text" name="do-receiver" id="inputDeliveryDoReceiver"
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Receiver</td>
+                        <td class="pl-4"> :
+                            <input type="text" name="do-receiver" id="inputDeliveryDoReceiver"
                             value="{{ $tempDo->do_receiver ?? '' }}">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="inputNoInvoice" class="col-2 col-form-label">Deliveryman</label>
-                    <div class="col">
-                        <input class="form-control" type="text" name="do-deliveryman" id="inputDeliveryDoDeliveryman"
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Deliveryman</td>
+                        <td class="pl-4"> :
+                            <input type="text" name="do-deliveryman" id="inputDeliveryDoDeliveryman"
                             value="{{ $tempDo->do_deliveryman ?? '' }}">
-                    </div>
-                </div>
+                        </td>
+                    </tr>
+
+                </table>
             </div>
             <div class="col-4">
-                <div class="form-group row">
-                    <label for="inputDueDate" class="col-2 col-form-label">Date :</label>
-                    <div class="col">
-                        <input class="form-control" type="date" id="inputDeliveryDoDate" name="do-date"
+                <table>
+                    <tr>
+                        <td>Date</td>
+                        <td class="pl-4">
+                            : <input type="date" id="inputDeliveryDoDate" name="do-date"
                             value="{{ !empty($tempDo) ? date('Y-m-d', strtotime($tempDo->do_date)) : '' }}">
-                    </div>
-                </div>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
 
@@ -137,26 +207,6 @@
                 @endforeach
             </tbody>
         </table>
-        <!-- <div class="row justify-content-between mt-3">
-            <div id="user-list-page-info" class="col-md-6">
-                <span>Showing 1 to 5 of 5 entries</span>
-            </div>
-            <div class="col-md-6">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-end mb-0">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div> -->
     </div>
 </div>
 
@@ -198,4 +248,7 @@
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+<script src="{{ asset('/assets/js/ajax/purchase/delivery-order.js') }}"></script>
 @endsection

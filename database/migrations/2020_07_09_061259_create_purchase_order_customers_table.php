@@ -15,13 +15,15 @@ class CreatePurchaseOrderCustomersTable extends Migration
     public function up()
     {
         Schema::create('purchase_order_customers', function (Blueprint $table) {
-            $table->string('po_id')->primary();
+            $table->bigIncrements('po_id');
+            $table->string('po_id_format');
             $table->string('po_num');
-            $table->string('id_penawaran');
+            $table->string('bargain_id');
             $table->integer('customer_id');
             $table->string('po_note');
             $table->integer('po_discount');
-            $table->string('po_discount_type');
+            $table->string('po_discount_type', 1);
+            $table->string('po_attachment');
             $table->integer('id_user');
             $table->timestamps();
             $table->softDeletes();

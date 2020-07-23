@@ -7,10 +7,10 @@
             <div class="iq-card">
                 <div class="iq-card-header d-flex justify-content-between">
                     <div class="iq-header-title">
-                        <h4 class="card-title">Supplier List</h4>
+                        <h4 class="card-title">Daftar Vendor</h4>
                     </div>
                     <a href="{{ url('suppliers/new') }}" class="btn btn-primary">
-                        Add New Supplier
+                        Tambah Vendor Baru
                     </a>
                 </div>
                 <div class="iq-card-body">
@@ -44,14 +44,11 @@
                                 <tr>
                                     <th>Profile</th>
                                     <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Alamat</th>
-                                    <th>Alamat 2</th>
-                                    <th>No. Telp</th>
-                                    <th>No. Telp 2</th>
-                                    <th>Rek. Giro</th>
-                                    <th>Action</th>
+                                    <th>Nama Vendor</th>
+                                    <th>Nama Kontak</th>
+                                    <th>Email Kontak</th>
+                                    <th>No.Telp Kontak</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -62,17 +59,18 @@
                                                 alt="profile"></td>
                                         <td>{{ $sup->sup_id }}</td>
                                         <td>{{ $sup->sup_name }}</td>
-                                        <td>{{ $sup->sup_email }}</td>
-                                        <td>{{ $sup->sup_address }}</td>
-                                        <td>{{ $sup->sup_address2 }}</td>
-                                        <td>{{ $sup->sup_cp }}</td>
-                                        <td>{{ $sup->sup_cp2 }}</td>
-                                        <td>{{ $sup->sup_rek_giro }}</td>
+                                        <td>{{ $sup->cp_name }}</td>
+                                        <td>{{ $sup->cp_email }}</td>
+                                        <td>{{ $sup->cp_telp }}</td>
                                         <td class="text-center">
                                             <div class="flex align-items-center">
+                                                <a type="button" class="btn btn-primary" data-placement="top" data-toggle="tooltip" title=""
+                                                data-original-title="Edit"
+                                                href="{{ 'suppliers/'.$sup->sup_id }}">Detail</a>
+
                                                 <a type="button" class="btn btn-warning" data-placement="top" data-toggle="tooltip" title=""
                                                 data-original-title="Edit"
-                                                href="{{ 'suppliers/'.$sup->sup_id.'/edit' }}">Update</a>
+                                                href="{{ 'suppliers/'.$sup->sup_id.'/edit' }}">Ubah</a>
 
                                                 <form action="{{ url('suppliers/'.$sup->sup_id) }}"
                                                     method="post" class="d-inline-block">
@@ -80,7 +78,7 @@
                                                     @csrf
                                                     <button type="submit" class="btn btn-danger" data-toggle="tooltip"
                                                         data-placement="top" title=""
-                                                        data-original-title="Delete">Delete</button>
+                                                        data-original-title="Delete">Hapus</button>
                                                 </form>
                                             </div>
                                         </td>
@@ -91,24 +89,7 @@
                         </table>
                     </div>
                     <div class="row justify-content-between mt-3">
-                        <div id="user-list-page-info" class="col-md-6">
-                            <span>Showing 1 to 5 of 5 entries</span>
-                        </div>
-                        <div class="col-md-6">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-end mb-0">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                                    </li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">Next</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
+                        {{ $suppliers->links('partials.pagination') }}
                     </div>
                 </div>
             </div>
