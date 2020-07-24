@@ -37,7 +37,7 @@ Route::middleware(['myMiddleWare'])->group(function(){
     Route::get('users/{id_user}/edit', 'UserController@show');
     Route::get('/users/{id_user}/changepassword', 'UserController@showChangePassword');
     Route::post('/users/{id_user}/changepassword', 'UserController@changePassword');
-    
+
     //////////////////////////////
     /* Master Roles */
     /////////////////////////////
@@ -110,14 +110,14 @@ Route::middleware(['myMiddleWare'])->group(function(){
     Route::delete('/invoices/{invoice_id}', 'InvoiceController@destroy');
     Route::get('/invoices/po/calculation/discount/ajax', 'InvoiceController@getCalcDiscountData');
     Route::get('/invoices/invoice/calculation/total/ajax', 'InvoiceController@getTotalInvoicePrice');
-    
 
-
+    //Bukti Bayar Invoice
+    Route::post('/invoices/bukti-bayar','InvoiceController@bukti_bayar');
     //////////////////////////////
     /* Delivery Orders */
     /////////////////////////////
-    Route::get('/deliveryorders', 'DeliveryOrderController@index');  
-    Route::get('/deliveryorders/po', 'DeliveryOrderController@poList'); 
+    Route::get('/deliveryorders', 'DeliveryOrderController@index');
+    Route::get('/deliveryorders/po', 'DeliveryOrderController@poList');
     Route::get('/deliveryorders/new', 'DeliveryOrderController@create');
     Route::post('/deliveryorders/new', 'DeliveryOrderController@store');
     Route::get('/deliveryorders/product', 'DeliveryOrderController@showProduct');
@@ -128,7 +128,7 @@ Route::middleware(['myMiddleWare'])->group(function(){
     Route::patch('/deliveryorders/detail', 'DeliveryOrderController@updateDetail');
 
     Route::post('/deliveryorders/product/{product_id}', 'DeliveryOrderController@storeProduct');
-    Route::get('/deliveryorders/{delivery_id}', 'DeliveryOrderController@detail'); 
+    Route::get('/deliveryorders/{delivery_id}', 'DeliveryOrderController@detail');
     Route::get('/deliveryorders/{delivery_id}/edit', 'DeliveryOrderController@show');
     Route::put('/deliveryorders/{delivery_id}', 'DeliveryOrderController@update');
     Route::delete('/deliveryorders/{delivery_id}', 'DeliveryOrderController@destroy');
@@ -137,7 +137,7 @@ Route::middleware(['myMiddleWare'])->group(function(){
     //////////////////////////////
     /* Sales Couriers */
     /////////////////////////////
-    
+
     Route::get('/couriers', 'CourierController@index');
     Route::get('/couriers/new', 'CourierController@create');
     Route::post('/couriers/new', 'CourierController@store');
@@ -176,7 +176,7 @@ Route::middleware(['myMiddleWare'])->group(function(){
     Route::delete('/sales/purchaseorders/{po_id}', 'Sales\PurchaseOrderCustomerController@destroy');
     Route::get('/sales/bargains/detail/calculation/discount/ajax', 'Sales\BargainCustomerController@getCalcDiscountData');
 
-    
+
     //bargain
     Route::get('/sales/bargains', 'Sales\BargainCustomerController@index');
     Route::get('/sales/bargains/new', 'Sales\BargainCustomerController@create');
@@ -197,7 +197,7 @@ Route::middleware(['myMiddleWare'])->group(function(){
     Route::get('/sales/bargains/{bargain_id}', 'Sales\BargainCustomerController@detail');
     Route::get('/sales/bargains/{bargain_id}/edit', 'Sales\BargainCustomerController@show');
     Route::delete('/sales/bargains/{bargain_id}/cancel', 'Sales\BargainCustomerController@cancelTempBargainEdit');
-    
+
     Route::post('/sales/bargains/temp/edit', 'Sales\BargainCustomerController@tempUpdate');
     Route::patch('/sales/bargains/{bargain_id}', 'Sales\BargainCustomerController@update');
 
@@ -220,13 +220,13 @@ Route::middleware(['myMiddleWare'])->group(function(){
     Route::get('/sales/invoices/pdf/{invoice_id}', 'Sales\InvoiceController@printToPDF');
     Route::get('/sales/invoices/{invoice_id}', 'Sales\InvoiceController@detail');
 
-
-
-
-
-
+    //////////////////////////////
+    /* Invoice Bussiness to Customer */
+    /////////////////////////////
+    Route::get('/tagihan-pesanan-b2c','InvoiceB2BController@index');
+    Route::get('/tagihan-pesanan-b2c/show/{trans_id}','InvoiceB2BController@show');
+    Route::get('/cetak-surat-jalan-tagihan-b2c/{trans_id}','InvoiceB2BController@cetak');
 });
-
 Route::get('changelog', function(){
     return base_path('changelog');
 });

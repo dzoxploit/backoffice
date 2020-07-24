@@ -122,6 +122,11 @@
                                     data-placement="top" data-toggle="tooltip" title=""
                                     data-original-title="Halaman ini dapat di demokan"
                                     class="dm-dev-notif bg-success">D</span></a></li>
+                        <li><a href="{{ url('/tagihan-pesanan-b2c') }}">Tagihan Pesanan B2C<span
+                                    data-placement="top" data-toggle="tooltip" title=""
+                                    data-original-title="Halaman ini dapat di demokan"
+                                    class="dm-dev-notif bg-success">D</span></a></li>
+
 
                     </ul>
                 </li>
