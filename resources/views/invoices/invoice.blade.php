@@ -35,7 +35,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                            
+
                             </div>
                         </div>
                         <table id="user-list-table" class="table table-striped table-bordered mt-4" role="grid"
@@ -61,7 +61,6 @@
                                         <td class="text-center">
                                             <div class="flex align-items-center">
                                                 <a href="{{ url('/invoices/'.$inv->invoice_id) }}"><button type="button" class="btn btn-info">Detail</button></a>
-
                                                 <form action="{{ url('invoices/'.$inv->invoice_id) }}"
                                                     method="post" class="d-inline-block">
                                                     @method('delete')
@@ -70,14 +69,89 @@
                                                         data-placement="top" title=""
                                                         data-original-title="Delete">Delete</button>
                                                 </form>
+                                                <button type="button" class="btn btn-primary" id="validasi_pembayaran" data-toggle="modal" value="{{$inv->invoice_id}}" data-target="#exampleModal">
+                                                    Validasi Pembayaran
+                                                </button>
                                             </div>
                                         </td>
                                     </tr>
                                 @endforeach
-
                             </tbody>
                         </table>
                     </div>
+                <!--Awal Modal Validasi Pembayaran-->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Validasi Pembayaran</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                    <div>
+                    <form action="{{ url('/invoices/bukti-bayar') }}" enctype="multipart/form-data" class="d-inline-block" method="POST">
+                        @csrf
+                     </div>
+                        <div class="col-12">
+                            <div class="form-group row">
+                                <label for="invoiceId" class="col-4 col-form-label">Invoice ID :</label>
+                                    <div class="col">
+                                        <input class="form-control" type="text" name="invoice_id" id="invoice_id_data"/>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group row">
+                                <label for="paid" class="col-4 col-form-label">Jumlah Yang Dibayar :</label>
+                                    <div class="col">
+                                        <input class="form-control" type="text" name="paid"/>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group row">
+                                <label for="paid" class="col-4 col-form-label">Jumlah Yang Dibayar :</label>
+                                    <div class="col">
+                                        <input class="form-control" type="date" name="paid_date"/>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group row">
+                                <label for="paidProof" class="col-4 col-form-label">Bukti Pembayaran :</label>
+                                    <div class="col">
+                                    <input type="file" name="payment_proof" id="salesPoCustomerAttachment" accept="image/png, image/jpeg">
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group row">
+                                <label for="paymentMethod" class="col-4 col-form-label">Payment Method :</label>
+                                    <div class="col">
+                                    <input class="form-control" type="text" name="payment_method"/>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group row">
+                                <label for="note" class="col-4 col-form-label">Note :</label>
+                                    <div class="col">
+                                    <input class="form-control" type="text" name="note"/>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="float-right my-2 mx-1 btn btn-primary" >Save</button>
+                    </form>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            <!--Akhir Modal-->
                     <div class="row justify-content-between mt-3">
                         <div id="user-list-page-info" class="col-md-6">
                             <span>Showing 1 to 5 of 5 entries</span>
@@ -103,4 +177,9 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+var data_id = document.getElementById("validasi_pembayaran").value;
+document.getElementById("invoice_id_data").value = data_id;
+</script>
 @endsection
+

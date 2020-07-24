@@ -30,17 +30,17 @@ class SupplierController extends Controller
     public function store(InsertSupplier $request)
     {
         $supplierData = [
-            'sup_name' => $request->input('sup_name'), 
-            'sup_email' => $request->input('sup_email'), 
+            'sup_name' => $request->input('sup_name'),
+            'sup_email' => $request->input('sup_email'),
             'sup_address' => $request->input('sup_address'),
             'sup_address2' => $request->input('sup_address2'),
             'sup_desc' => $request->input('sup_desc'),
-            'cp_name' => $request->input('cp_name'), 
+            'cp_name' => $request->input('cp_name'),
             'cp_telp' => $request->input('cp_telp'),
             'cp_email' => $request->input('cp_email'),
-            'sup_bank_rekening' => $request->input('sup_bank_rekening'), 
-            'sup_bank_name' => $request->input('sup_bank_name'), 
-            'sup_bank_cabang' => $request->input('sup_bank_cabang'), 
+            'sup_bank_rekening' => $request->input('sup_bank_rekening'),
+            'sup_bank_name' => $request->input('sup_bank_name'),
+            'sup_bank_cabang' => $request->input('sup_bank_cabang'),
             'sup_bank_an' => $request->input('sup_bank_an'),
             'sup_npwp' => $request->input('sup_npwp')
         ];
@@ -75,17 +75,17 @@ class SupplierController extends Controller
     public function update(UpdateSupplier $request , $sup_id)
     {
         $supplierData = [
-            'sup_name' => $request->input('sup_name'), 
-            'sup_email' => $request->input('sup_email'), 
+            'sup_name' => $request->input('sup_name'),
+            'sup_email' => $request->input('sup_email'),
             'sup_address' => $request->input('sup_address'),
             'sup_address2' => $request->input('sup_address2'),
             'sup_desc' => $request->input('sup_desc'),
-            'cp_name' => $request->input('cp_name'), 
+            'cp_name' => $request->input('cp_name'),
             'cp_telp' => $request->input('cp_telp'),
             'cp_email' => $request->input('cp_email'),
-            'sup_bank_rekening' => $request->input('sup_bank_rekening'), 
-            'sup_bank_name' => $request->input('sup_bank_name'), 
-            'sup_bank_cabang' => $request->input('sup_bank_cabang'), 
+            'sup_bank_rekening' => $request->input('sup_bank_rekening'),
+            'sup_bank_name' => $request->input('sup_bank_name'),
+            'sup_bank_cabang' => $request->input('sup_bank_cabang'),
             'sup_bank_an' => $request->input('sup_bank_an'),
             'sup_npwp' => $request->input('sup_npwp')
         ];
@@ -97,7 +97,7 @@ class SupplierController extends Controller
             throw $th;
             return redirect()->back()->with('Error', 'Gagal');
         }
-        
+
     }
 
     public function destroy($sup_id)

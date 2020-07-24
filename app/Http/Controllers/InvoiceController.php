@@ -9,12 +9,15 @@ use App\Supplier;
 use App\TempDetailPurchaseOrder;
 use App\TempPurchaseOrderCustomer;
 use Carbon\Carbon;
+use App\BuktiBayar;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
 {
     public function index()
     {
+        // $invoice = Invoice::join('bukti_bayar','bukti_bayar.invoice_id','=','invoices.invoice_id')->where('bukti_bayar.invoice_id','!=',null)->orderBy('created_at', 'DESC')->get();
+
         $invoice = Invoice::orderBy('created_at', 'DESC')->get();
         return view('invoices.invoice', [
             'pageTitle' => 'Invoice',
@@ -39,7 +42,7 @@ class InvoiceController extends Controller
     public function check()
     {
         $poIdExplode = explode("/",request('po_id'));
-        
+
         $arrangePoIdFormat = [
             $poIdExplode['1'],
             $poIdExplode['2'],
@@ -49,7 +52,7 @@ class InvoiceController extends Controller
 
         $poId = ltrim($poIdExplode['0'], '0');
         $po_id_format = '/'.implode('/', $arrangePoIdFormat);
-    
+
         $purchaseOrder = PurchaseOrder::where('po_id', $poId)->where('po_id_format', $po_id_format)->count();
 
         if ($purchaseOrder > 0) {
@@ -64,11 +67,30 @@ class InvoiceController extends Controller
             ]);
         }
     }
+    public function get_invoice_id($invoice_id){
+        $id_data = $invoice_id;
+        return response()->json($id);
+    }
+    public function bukti_bayar(Request $request){
 
+        $attachment = request()->file('payment_proof');
+        $path = $attachment->store('attachment', 'public');
+
+        $buktibayar = new BuktiBayar;
+        $buktibayar->invoice_id = $request->invoice_id;
+        $buktibayar->paid = $request->paid;
+        $buktibayar->paid_date = $request->paid_date;
+        $buktibayar->confirm_date = Carbon::now();
+        $buktibayar->payment_proof = $path;
+        $buktibayar->payment_method = $request->payment_method;
+        $buktibayar->note = $request->note;
+        $buktibayar->save();
+        return redirect()->back();
+    }
     public function store()
     {
         $poIdExplode = explode("/",request('invoicePoId'));
-        
+
         $arrangePoIdFormat = [
             $poIdExplode['1'],
             $poIdExplode['2'],
@@ -98,7 +120,7 @@ class InvoiceController extends Controller
         Invoice::create($invoiceData);
 
         session()->flash('Success', 'Data berhasil dimasukan');
-        
+
         return redirect('/invoices');
     }
 
@@ -200,7 +222,7 @@ class InvoiceController extends Controller
             $ppnCalc = $this->calcDiscountData($po_id) * 10 / 100;
 
             return $ppnCalc;
-        } else { 
+        } else {
             return 0;
         }
     }
